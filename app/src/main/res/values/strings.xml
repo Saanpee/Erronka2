@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ElorMov</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="schedule">Schedule</string>
+    <string name="students">Students</string>
+    <string name="profile">Profile</string>
+    <string name="dark_mode">Dark Mode</string>
+</resources>
