@@ -1,0 +1,189 @@
+<div class="ikastetxeak-page fade-in">
+      <!-- Goiburua -->
+      <div class="page-header mb-4">
+        <h1>{{ 'IKASTETXEAK.TITLE' | translate }}</h1>
+        <p class="text-muted mb-0">{{ 'IKASTETXEAK.SUBTITLE' | translate }}</p>
+      </div>
+
+      <!-- Filtroak -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row g-3">
+            <!-- Bilaketa -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label class="form-label">{{ 'COMMON.SEARCH' | translate }}</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-search"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="filters.bilaketa"
+                  (ngModelChange)="onFilterChange()"
+                  [placeholder]="'IKASTETXEAK.SEARCH_PLACEHOLDER' | translate">
+              </div>
+            </div>
+
+            <!-- Mota (DTITUC) -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label class="form-label">{{ 'IKASTETXEA.TYPE' | translate }}</label>
+              <select
+                class="form-select"
+                [(ngModel)]="filters.mota"
+                (ngModelChange)="onFilterChange()">
+                <option value="">{{ 'COMMON.ALL' | translate }}</option>
+                <option value="hezkuntza_saila">{{ 'IKASTETXEA.TYPE_PUBLIC' | translate }}</option>
+                <option value="pribatua">{{ 'IKASTETXEA.TYPE_PRIVATE' | translate }}</option>
+                <option value="beste_publiko">{{ 'IKASTETXEA.TYPE_OTHER' | translate }}</option>
+              </select>
+            </div>
+
+            <!-- Lurraldea (DTERRER) -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label class="form-label">{{ 'IKASTETXEA.TERRITORY' | translate }}</label>
+              <select
+                class="form-select"
+                [(ngModel)]="filters.lurraldea"
+                (ngModelChange)="onLurraldeaChange()">
+                <option value="">{{ 'COMMON.ALL' | translate }}</option>
+                <option value="araba">Araba</option>
+                <option value="bizkaia">Bizkaia</option>
+                <option value="gipuzkoa">Gipuzkoa</option>
+              </select>
+            </div>
+
+            <!-- Udalerria (DMUNIC) -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label class="form-label">{{ 'IKASTETXEA.MUNICIPALITY' | translate }}</label>
+              <select
+                class="form-select"
+                [(ngModel)]="filters.udalerria"
+                (ngModelChange)="onFilterChange()">
+                <option value="">{{ 'COMMON.ALL' | translate }}</option>
+                @for (udalerria of udalerriak; track udalerria) {
+                  <option [value]="udalerria">
+                    {{ udalerria }}
+                  </option>
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Mapa -->
+        <div class="col-12 col-lg-7">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                <i class="bi bi-map me-2"></i>
+                {{ 'IKASTETXEAK.MAP' | translate }}
+              </h5>
+            </div>
+            <div class="card-body p-0">
+              <div #mapContainer class="map-container"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zerrenda -->
+        <div class="col-12 col-lg-5">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">
+                <i class="bi bi-list-ul me-2"></i>
+                {{ 'IKASTETXEAK.LIST' | translate }}
+              </h5>
+              <span class="badge bg-primary">{{ filteredIkastetxeak.length }}</span>
+            </div>
+            <div class="card-body p-0 ikastetxe-list-container">
+              <!-- Kargatzean -->
+              @if (isLoading) {
+                <app-loading-spinner [size]="2"></app-loading-spinner>
+              }
+
+              <!-- Zerrenda -->
+              @if (!isLoading) {
+                <div class="list-group list-group-flush">
+                  @for (ikastetxea of filteredIkastetxeak; track ikastetxea.id) {
+                    <button
+                      type="button"
+                      class="list-group-item list-group-item-action"
+                      (click)="onSelectIkastetxea(ikastetxea)"
+                      [class.active]="selectedIkastetxea?.id === ikastetxea.id">
+                      <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                          <h6 class="mb-1">{{ ikastetxea.izena }}</h6>
+                          <small class="text-muted">
+                            <i class="bi bi-geo-alt me-1"></i>
+                            {{ ikastetxea.udalerria }}, {{ ikastetxea.lurraldea | titlecase }}
+                          </small>
+                        </div>
+                        <span class="badge" [ngClass]="getMotaBadgeClass(ikastetxea.mota)">
+                          {{ 'IKASTETXEA.TYPE_' + ikastetxea.mota.toUpperCase() | translate }}
+                        </span>
+                      </div>
+                    </button>
+                  }
+
+                  <!-- Ez dago ikastetxerik -->
+                  @if (filteredIkastetxeak.length === 0) {
+                    <div class="text-center text-muted py-4">
+                      <i class="bi bi-building display-4 d-block mb-2"></i>
+                      {{ 'IKASTETXEAK.NO_SCHOOLS' | translate }}
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Hautatutako ikastetxearen xehetasunak -->
+          @if (selectedIkastetxea) {
+            <div class="card mt-4">
+              <div class="card-header">
+                <h5 class="mb-0">
+                  <i class="bi bi-info-circle me-2"></i>
+                  {{ 'IKASTETXEAK.DETAILS' | translate }}
+                </h5>
+              </div>
+              <div class="card-body">
+                <h5>{{ selectedIkastetxea.izena }}</h5>
+                <ul class="list-unstyled">
+                  <li class="mb-2">
+                    <i class="bi bi-geo-alt text-primary me-2"></i>
+                    {{ selectedIkastetxea.helbidea }}
+                  </li>
+                  <li class="mb-2">
+                    <i class="bi bi-mailbox text-primary me-2"></i>
+                    {{ selectedIkastetxea.postaKodea }} {{ selectedIkastetxea.udalerria }}
+                  </li>
+                  @if (selectedIkastetxea.telefonoa) {
+                    <li class="mb-2">
+                      <i class="bi bi-telephone text-primary me-2"></i>
+                      {{ selectedIkastetxea.telefonoa }}
+                    </li>
+                  }
+                  @if (selectedIkastetxea.emaila) {
+                    <li class="mb-2">
+                      <i class="bi bi-envelope text-primary me-2"></i>
+                      <a [href]="'mailto:' + selectedIkastetxea.emaila">{{ selectedIkastetxea.emaila }}</a>
+                    </li>
+                  }
+                  @if (selectedIkastetxea.webgunea) {
+                    <li>
+                      <i class="bi bi-globe text-primary me-2"></i>
+                      <a [href]="'https://' + selectedIkastetxea.webgunea" target="_blank">
+                        {{ selectedIkastetxea.webgunea }}
+                      </a>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>

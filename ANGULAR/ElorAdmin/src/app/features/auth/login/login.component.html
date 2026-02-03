@@ -1,0 +1,85 @@
+<div class="login-container">
+      <div class="login-card">
+        <!-- Logo -->
+        <div class="login-logo">
+          <img src="public/images/elorrieta-logo.jpg" alt="Elorrieta-Erreka Mari">
+        </div>
+
+        <!-- Titulua -->
+        <h2 class="login-title">{{ 'LOGIN.TITLE' | translate }}</h2>
+
+        <!-- Errore mezua -->
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Sesioa iraungi bada -->
+        <div class="alert alert-warning" *ngIf="sessionExpired">
+          <i class="bi bi-clock me-2"></i>
+          {{ 'LOGIN.SESSION_EXPIRED' | translate }}
+        </div>
+
+        <!-- Login formularioa -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <!-- Email eremua -->
+          <div class="mb-3">
+            <label for="email" class="form-label">
+              {{ 'LOGIN.EMAIL' | translate }}
+            </label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-envelope"></i>
+              </span>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                formControlName="email"
+                [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
+                [class.is-invalid]="isFieldInvalid('email')">
+            </div>
+            <div class="invalid-feedback d-block" *ngIf="isFieldInvalid('email')">
+              {{ 'LOGIN.EMAIL_REQUIRED' | translate }}
+            </div>
+          </div>
+
+          <!-- Pasahitza eremua -->
+          <div class="mb-4">
+            <label for="password" class="form-label">
+              {{ 'LOGIN.PASSWORD' | translate }}
+            </label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-lock"></i>
+              </span>
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                class="form-control"
+                formControlName="pasahitza"
+                [placeholder]="'LOGIN.PASSWORD_PLACEHOLDER' | translate"
+                [class.is-invalid]="isFieldInvalid('pasahitza')">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="togglePassword()">
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback d-block" *ngIf="isFieldInvalid('pasahitza')">
+              {{ 'LOGIN.PASSWORD_REQUIRED' | translate }}
+            </div>
+          </div>
+
+          <!-- Submit botoia -->
+          <button
+            type="submit"
+            class="btn btn-primary w-100 btn-lg"
+            [disabled]="isLoading">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+            {{ isLoading ? ('LOGIN.LOADING' | translate) : ('LOGIN.SUBMIT' | translate) }}
+          </button>
+        </form>
+      </div>
+    </div>

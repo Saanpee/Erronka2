@@ -1,0 +1,187 @@
+<div class="erabiltzaileak-page fade-in">
+  <!-- Goiburua -->
+  <div
+    class="page-header d-flex justify-content-between align-items-center mb-4"
+  >
+    <div>
+      <h1>{{ "ERABILTZAILEAK.TITLE" | translate }}</h1>
+      <p class="text-muted mb-0">{{ "ERABILTZAILEAK.SUBTITLE" | translate }}</p>
+    </div>
+    @if (authService.isGod() || authService.isAdmin()) {
+      <a
+        routerLink="/erabiltzaileak/berria"
+        class="btn btn-primary">
+        <i class="bi bi-person-plus me-2"></i>
+        {{ "ERABILTZAILEAK.ADD_NEW" | translate }}
+      </a>
+    }
+  </div>
+
+  <!-- Filtroak -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <!-- Bilaketa -->
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="searchQuery"
+              (ngModelChange)="onSearch()"
+              [placeholder]="'ERABILTZAILEAK.SEARCH_PLACEHOLDER' | translate"
+            />
+          </div>
+        </div>
+
+        <!-- Filtro por tipo_id -->
+        <div class="col-12 col-md-6 col-lg-6">
+          <select
+            class="form-select"
+            [(ngModel)]="selectedTipoId"
+            (ngModelChange)="onFilterChange()">
+            <option value="">
+              {{ "ERABILTZAILEAK.ALL_ROLES" | translate }}
+            </option>
+            @if (authService.isGod()) {
+              <option value="1">{{"USER.GOD" | translate}}</option>
+            }
+            @if (authService.isGod() || authService.isAdmin()) {
+              <option value="2">{{"USER.ADMIN" | translate}}</option>
+            }
+            <option value="3">{{"USER.TEACHER" | translate}}</option>
+            <option value="4">{{"USER.STUDENT" | translate}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kargatzean -->
+  @if (isLoading) {
+    <app-loading-spinner
+      message="Kargatzen..."
+    ></app-loading-spinner>
+  }
+
+  <!-- Taula -->
+  @if (!isLoading) {
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead>
+            <tr>
+              <th>{{ "USER.PHOTO" | translate }}</th>
+              <th>{{ "USER.NAME" | translate }}</th>
+              <th>{{ "USER.EMAIL" | translate }}</th>
+              <th>{{ "USER.TIPO_ID" | translate }}</th>
+              <th>{{ "USER.ROLE" | translate }}</th>
+              <th class="text-end">{{ "COMMON.ACTIONS" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of filteredUsers; track user.id) {
+              <tr>
+                <!-- Argazkia -->
+                <td>
+                  <img
+                    [src]="getUserAvatar(user)"
+                    [alt]="user.izena"
+                    class="user-avatar"
+                  />
+                </td>
+                <!-- Izena -->
+                <td>
+                  <strong>{{ user.izena }} {{ user.abizena }}</strong>
+                </td>
+                <!-- Email -->
+                <td>{{ user.email }}</td>
+                <!-- Tipo ID -->
+                <td>
+                  <span class="badge bg-secondary">{{ user.tipo_id }}</span>
+                </td>
+                <!-- Rola -->
+                <td>
+                  <span class="badge" [ngClass]="getRoleBadgeClass(user.rola)">
+                    {{ "ROLES." + user.rola.toUpperCase() | translate }}
+                  </span>
+                </td>
+                <!-- Ekintzak -->
+                <td class="text-end">
+                  <div class="btn-group" role="group">
+                    @if (canView(user)) {
+                      <a
+                        [routerLink]="['/erabiltzaileak/editatu', user.id]"
+                        class="btn btn-outline-primary btn-sm"
+                        [title]="'COMMON.EDIT' | translate">
+                        <i class="bi bi-pencil"></i>
+                      </a>
+                    }
+                    @if (canDelete(user)) {
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sm"
+                        (click)="confirmDelete(user)"
+                        [title]="'COMMON.DELETE' | translate">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+
+            <!-- Ez dago erabiltzailerik -->
+            @if (filteredUsers.length === 0) {
+              <tr>
+                <td colspan="7" class="text-center py-4 text-muted">
+                  <i class="bi bi-inbox display-4 d-block mb-2"></i>
+                  {{ "ERABILTZAILEAK.NO_USERS" | translate }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  <!-- Ezabatzeko modala -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ "COMMON.CONFIRM_DELETE" | translate }}</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ "ERABILTZAILEAK.DELETE_CONFIRM" | translate }}</p>
+          @if (userToDelete) {
+            <p class="fw-bold">
+              {{ userToDelete.izena }} {{ userToDelete.abizena }}
+            </p>
+          }
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            {{ "COMMON.CANCEL" | translate }}
+          </button>
+          <button type="button" class="btn btn-danger" (click)="deleteUser()">
+            {{ "COMMON.DELETE" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

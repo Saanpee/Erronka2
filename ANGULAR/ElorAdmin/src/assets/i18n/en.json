@@ -1,0 +1,207 @@
+{
+  "APP": {
+    "WELCOME": "Welcome"
+  },
+  "MENU": {
+    "DASHBOARD": "Dashboard",
+    "ERABILTZAILEAK": "Users",
+    "BILERAK": "Meetings",
+    "IKASTETXEAK": "Schools",
+    "ORDUTEGIA": "Schedule",
+    "PROFILA": "My Profile"
+  },
+  "NAV": {
+    "LOGOUT": "Logout"
+  },
+  "NAVBAR": {
+    "LOGOUT": "Logout"
+  },
+  "AUTH": {
+    "DEMO_CREDENTIALS": "Demo credentials"
+  },
+  "LOGIN": {
+    "TITLE": "Login",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "your.email@elorrieta.eus",
+    "PASSWORD": "Password",
+    "PASSWORD_PLACEHOLDER": "Your password",
+    "EMAIL_REQUIRED": "Email is required",
+    "PASSWORD_REQUIRED": "Password is required",
+    "SUBMIT": "Login",
+    "LOADING": "Loading...",
+    "SESSION_EXPIRED": "Session expired",
+    "ROLE": "Role"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "SUBTITLE": "View general summary",
+    "WELCOME": "Welcome",
+    "STUDENTS": "Students",
+    "TEACHERS": "Teachers",
+    "TODAY_MEETINGS": "Today's meetings",
+    "ADMINS": "Administrators",
+    "UPCOMING_MEETINGS": "Upcoming meetings",
+    "NO_MEETINGS": "No scheduled meetings",
+    "VIEW_ALL": "View all",
+    "MY_INFO": "My information"
+  },
+  "ERABILTZAILEAK": {
+    "NEW": "New",
+    "NEW_TITLE": "New user",
+    "EDIT": "Edit user",
+    "EDIT_TITLE": "Edit user",
+    "TITLE": "Users",
+    "SUBTITLE": "Administrator management",
+    "ADD_NEW": "New user",
+    "SEARCH_PLACEHOLDER": "Search name, surname...",
+    "ALL_ROLES": "All roles",
+    "NO_USERS": "No users found",
+    "DELETE_CONFIRM": "Are you sure you want to delete this user?",
+    "READ_ONLY_MODE": "Read-only mode"
+  },
+  "USER": {
+    "TIPO_ID": "ID Type",
+    "GOD": "God",
+    "ADMIN": "Administrator",
+    "TEACHER": "Teacher",
+    "STUDENT": "Student",
+    "NAME": "Full name",
+    "FIRST_NAME": "Name",
+    "LAST_NAME": "Surname",
+    "PASSWORD": "Password",
+    "EMAIL": "Email",
+    "PHONE": "Phone",
+    "ROLE": "Role",
+    "ADDRESS": "Address",
+    "PHOTO": "Photo",
+    "UPDATED_SUCCESS": "User updated successfully"
+  },
+  "TEACHER": {
+    "ALL_DEPARTMENTS": "All departments"
+  },
+  "STUDENT": {
+    "ALL_COURSES": "All courses"
+  },
+  "IKASLE": {
+    "TALDEA": "Group"
+  },
+  "BILERA": {
+    "TIME": "Time",
+    "CLASSROOM": "Classroom",
+    "LOCATION": "Location",
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "DATE": "Date",
+    "START_TIME": "Start time",
+    "END_TIME": "End time",
+    "NOTES": "Notes",
+    "TYPE": "Type",
+    "STATUS": "Status",
+    "TERRITORY": "Territory",
+    "MUNICIPALITY": "Municipality",
+    "SCHOOL": "School",
+    "TYPE_GUZTIAK": "All",
+    "TYPE_HEZKUNTZA": "Education Department",
+    "TYPE_HEZKUNTZA_SAILA": "Education Department",
+    "TYPE_PRIBATUA": "Private",
+    "TYPE_BESTE": "Other public",
+    "TYPE_BESTE_PUBLIKO": "Other public",
+    "STATUS_PENDIENTE": "Pending"
+  },
+  "MEETING": {
+    "UPDATED_SUCCESS": "Meeting updated successfully"
+  },
+  "BILERAK": {
+    "EDIT": "Edit",
+    "EDIT_TITLE": "Edit meeting",
+    "NEW": "New",
+    "NEW_TITLE": "New meeting",
+    "TITLE": "Meetings",
+    "SUBTITLE": "Manage all meetings",
+    "ADD_NEW": "New meeting",
+    "NO_MEETINGS": "No meetings found",
+    "VIEW_TITLE": "View meeting",
+    "VIEW": "View meeting"
+  },
+  "IKASTETXEAK": {
+    "TITLE": "Schools",
+    "SUBTITLE": "All schools on map and list",
+    "SEARCH_PLACEHOLDER": "Search name, municipality...",
+    "MAP": "Map",
+    "LIST": "List",
+    "DETAILS": "Details",
+    "NO_SCHOOLS": "No schools found"
+  },
+  "IKASTETXEA": {
+    "TYPE": "Type",
+    "TERRITORY": "Territory",
+    "MUNICIPALITY": "Municipality",
+    "TYPE_HEZKUNTZA_SAILA": "Education Department",
+    "TYPE_PRIBATUA": "Private",
+    "TYPE_BESTE_PUBLIKO": "Other public"
+  },
+  "SCHOOL": {
+    "ALL_TERRITORIES": "All territories"
+  },
+  "SCHEDULE": {
+    "TEACHER": "Teacher"
+  },
+  "ORDUTEGIA": {
+    "TITLE": "My schedule",
+    "SUBTITLE": "Weekly class distribution",
+    "HOUR": "Hour",
+    "MONDAY": "Monday",
+    "TUESDAY": "Tuesday",
+    "WEDNESDAY": "Wednesday",
+    "THURSDAY": "Thursday",
+    "FRIDAY": "Friday",
+    "LEGEND": "Legend",
+    "REGULAR_CLASS": "Regular class",
+    "TUTORING": "Tutoring",
+    "GUARD": "Guard duty"
+  },
+  "PROFILA": {
+    "TITLE": "My profile",
+    "EDIT_INFO": "Edit information",
+    "CHANGE_PHOTO": "Change photo",
+    "STATS": "Statistics",
+    "MEMBER_SINCE": "Member since",
+    "CHANGE_PASSWORD": "Change password",
+    "NEW_PASSWORD": "New password",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "PASSWORD_HINT": "Minimum 8 characters",
+    "EMAIL_READONLY": "Email cannot be modified"
+  },
+  "ROLES": {
+    "GOD": "God",
+    "ADMIN": "Administrator",
+    "IRAKASLE": "Teacher",
+    "IKASLE": "Student",
+    "UNKNOWN": "Unknown"
+  },
+  "COMMON": {
+    "SAVE": "Save",
+    "SAVING": "Saving...",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SEARCH": "Search",
+    "ACTIONS": "Actions",
+    "YES": "Yes",
+    "NO": "No",
+    "LOADING": "Loading...",
+    "ERROR": "Error",
+    "CONFIRM": "Confirm",
+    "BACK": "Back",
+    "VIEW": "View",
+    "CONFIRM_DELETE": "Are you sure you want to delete?",
+    "SELECT": "Select",
+    "ALL": "All",
+    "OF": "of"
+  },
+  "ERRORS": {
+    "REQUIRED": "This field is required",
+    "INVALID_EMAIL": "Email format is not valid",
+    "MIN_LENGTH": "At least {{min}} characters required"
+  }
+}

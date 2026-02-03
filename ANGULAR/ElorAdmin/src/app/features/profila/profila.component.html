@@ -1,0 +1,172 @@
+<div class="animacion-entrada">
+  <h1 class="mb-4">{{ 'PROFILA.TITLE' | translate }}</h1>
+
+  <div class="row g-4">
+    <!-- Argazkia eta informazio orokorra -->
+    <div class="col-12 col-lg-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <img
+            [src]="userAvatar"
+            alt="Avatar"
+            class="avatar-perfil mb-3">
+          <h4>{{ currentUser?.izena }} {{ currentUser?.abizena }}</h4>
+          <span class="badge mb-3" [ngClass]="getRoleBadgeClass()">
+            {{ 'ROLES.' + (currentUser?.rola || 'UNKNOWN') | uppercase | translate }}
+          </span>
+          <p class="text-muted">{{ currentUser?.email }}</p>
+
+          <!-- Argazkia aldatzeko botoia -->
+          <input
+            type="file"
+            #fileInput
+            accept=".jpg,.jpeg"
+            style="display: none"
+            (change)="onFileSelected($event)">
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm"
+            (click)="fileInput.click()">
+            <i class="bi bi-camera me-2"></i>
+            {{ 'PROFILA.CHANGE_PHOTO' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Estatistikak -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h5 class="mb-0">{{ 'PROFILA.STATS' | translate }}</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mb-0">
+            <li class="d-flex justify-content-between mb-2">
+              <span class="text-muted">{{ 'PROFILA.MEMBER_SINCE' | translate }}</span>
+              <strong>{{ currentUser?.sortzeData | date:'dd/MM/yyyy' }}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formularioa -->
+    <div class="col-12 col-lg-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">{{ 'PROFILA.EDIT_INFO' | translate }}</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+              <!-- Izena -->
+              <div class="col-12 col-md-6">
+                <label for="izena" class="form-label">
+                  {{ 'USER.FIRST_NAME' | translate }}
+                </label>
+                <input
+                  type="text"
+                  id="izena"
+                  class="form-control"
+                  formControlName="izena"
+                  [class.is-invalid]="isFieldInvalid('izena')">
+              </div>
+
+              <!-- Abizena -->
+              <div class="col-12 col-md-6">
+                <label for="abizena" class="form-label">
+                  {{ 'USER.LAST_NAME' | translate }}
+                </label>
+                <input
+                  type="text"
+                  id="abizena"
+                  class="form-control"
+                  formControlName="abizena"
+                  [class.is-invalid]="isFieldInvalid('abizena')">
+              </div>
+
+              <!-- Email (irakurtzeko soilik) -->
+              <div class="col-12 col-md-6">
+                <label for="email" class="form-label">
+                  {{ 'USER.EMAIL' | translate }}
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  formControlName="email"
+                  readonly>
+                <small class="text-muted">{{ 'PROFILA.EMAIL_READONLY' | translate }}</small>
+              </div>
+
+              <!-- Telefonoa -->
+              <div class="col-12 col-md-6">
+                <label for="telefonoa" class="form-label">
+                  {{ 'USER.PHONE' | translate }}
+                </label>
+                <input
+                  type="tel"
+                  id="telefonoa"
+                  class="form-control"
+                  formControlName="telefonoa">
+              </div>
+
+              <!-- Helbidea -->
+              <div class="col-12">
+                <label for="helbidea" class="form-label">
+                  {{ 'USER.ADDRESS' | translate }}
+                </label>
+                <textarea
+                  id="helbidea"
+                  class="form-control"
+                  formControlName="helbidea"
+                  rows="2"></textarea>
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Pasahitza aldatu -->
+            <h6 class="mb-3">{{ 'PROFILA.CHANGE_PASSWORD' | translate }}</h6>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label for="pasahitzaBerria" class="form-label">
+                  {{ 'PROFILA.NEW_PASSWORD' | translate }}
+                </label>
+                <input
+                  type="password"
+                  id="pasahitzaBerria"
+                  class="form-control"
+                  formControlName="pasahitzaBerria">
+                <small class="text-muted">{{ 'PROFILA.PASSWORD_HINT' | translate }}</small>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="pasahitzaKonfirmatu" class="form-label">
+                  {{ 'PROFILA.CONFIRM_PASSWORD' | translate }}
+                </label>
+                <input
+                  type="password"
+                  id="pasahitzaKonfirmatu"
+                  class="form-control"
+                  formControlName="pasahitzaKonfirmatu">
+              </div>
+            </div>
+
+            <!-- Botoiak -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+              <button type="button" class="btn btn-secondary" (click)="resetForm()">
+                {{ 'COMMON.CANCEL' | translate }}
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+                @if (isSaving) {
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                }
+                {{ 'COMMON.SAVE' | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

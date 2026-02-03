@@ -1,0 +1,27 @@
+.map-container {
+      height: 500px;
+      width: 100%;
+      border-radius: 0 0 0.75rem 0.75rem;
+    }
+
+    .ikastetxe-list-container {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .list-group-item {
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f8f9fa;
+      }
+
+      &.active {
+        background-color: #0077b6;
+        border-color: #0077b6;
+
+        h6, small {
+          color: white !important;
+        }
+      }
+    }

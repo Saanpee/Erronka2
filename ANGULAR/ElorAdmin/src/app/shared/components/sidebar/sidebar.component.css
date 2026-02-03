@@ -1,0 +1,123 @@
+.barra-lateral {
+      width: 250px;
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--color-primario) 0%, var(--color-primario-oscuro) 100%);
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 1000;
+      transition: width var(--velocidad-normal);
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--sombra-media);
+
+      &.barra-contraida {
+        width: 70px;
+      }
+    }
+
+    .encabezado-barra {
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .logo-imagen {
+      max-width: 120px;
+      height: auto;
+      transition: max-width var(--velocidad-normal);
+      display: block;
+      margin: 0 auto;
+
+      &.contraido {
+        max-width: 40px;
+      }
+    }
+
+    .titulo-app {
+      display: block;
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-top: 0.75rem;
+      letter-spacing: 1px;
+    }
+
+    .menu-navegacion {
+      flex: 1;
+      padding: 1.5rem 0;
+      overflow-y: auto;
+    }
+
+    .enlace-menu {
+      color: rgba(255, 255, 255, 0.85);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all var(--velocidad-rapida);
+      border-left: 4px solid transparent;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0.3rem 0;
+    }
+
+    .enlace-menu i {
+      font-size: 1.25rem;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .texto-menu {
+      white-space: nowrap;
+    }
+
+    .enlace-menu:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.12);
+      border-left-color: var(--color-acento);
+      padding-left: 1.7rem;
+    }
+
+    .enlace-menu:focus,
+    .enlace-menu:focus-visible {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .enlace-menu.activo {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.18);
+      border-left-color: var(--color-acento);
+      font-weight: 700;
+    }
+
+    .pie-barra-lateral {
+      padding: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .boton-plegar-barra {
+      color: rgba(255, 255, 255, 0.7);
+      width: 100%;
+      text-align: center;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: color var(--velocidad-rapida);
+      font-size: 1.2rem;
+
+      &:hover {
+        color: white;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .barra-lateral {
+        transform: translateX(-100%);
+
+        &.visible {
+          transform: translateX(0);
+        }
+      }
+    }

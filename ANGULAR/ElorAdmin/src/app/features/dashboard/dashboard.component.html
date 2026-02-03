@@ -1,0 +1,144 @@
+<div class="animacion-entrada">
+      <!-- Goiburua -->
+      <div class="dashboard-header mb-4">
+        <h1>{{ 'DASHBOARD.WELCOME' | translate }}, {{ currentUser?.izena }}!</h1>
+        <p class="text-muted">{{ 'DASHBOARD.SUBTITLE' | translate }}</p>
+      </div>
+
+      <!-- Estatistika tarjetas -->
+      @if (authService.isGod()) {
+        <div class="row g-4 mb-4">
+          <!-- Ikasle kopurua -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="tarjeta-estadistica tarjeta-estudiantes" (click)="navigateToUsers(4)" style="cursor: pointer;">
+              <i class="bi bi-mortarboard icono-tarjeta"></i>
+              <div class="numero-tarjeta">{{ counts.ikasleak }}</div>
+              <div class="etiqueta-tarjeta">{{ 'DASHBOARD.STUDENTS' | translate }}</div>
+            </div>
+          </div>
+
+          <!-- Irakasle kopurua -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="tarjeta-estadistica tarjeta-profesores" (click)="navigateToUsers(3)" style="cursor: pointer;">
+              <i class="bi bi-person-workspace icono-tarjeta"></i>
+              <div class="numero-tarjeta">{{ counts.irakasleak }}</div>
+              <div class="etiqueta-tarjeta">{{ 'DASHBOARD.TEACHERS' | translate }}</div>
+            </div>
+          </div>
+
+          <!-- Bilera kopurua -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="tarjeta-estadistica tarjeta-reuniones" (click)="navigateToBilerak()" style="cursor: pointer;">
+              <i class="bi bi-calendar-event icono-tarjeta"></i>
+              <div class="numero-tarjeta">{{ gaurkoKopurua }}</div>
+              <div class="etiqueta-tarjeta">{{ 'DASHBOARD.TODAY_MEETINGS' | translate }}</div>
+            </div>
+          </div>
+
+          <!-- Admin kopurua -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="tarjeta-estadistica tarjeta-admin" (click)="navigateToUsers(2)" style="cursor: pointer;">
+              <i class="bi bi-shield-check icono-tarjeta"></i>
+              <div class="numero-tarjeta">{{ counts.adminak }}</div>
+              <div class="etiqueta-tarjeta">{{ 'DASHBOARD.ADMINS' | translate }}</div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Datozen bilerak -->
+      <div class="row g-4">
+        <div class="col-12 col-lg-8">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">
+                <i class="bi bi-calendar-week me-2"></i>
+                {{ 'DASHBOARD.UPCOMING_MEETINGS' | translate }}
+              </h5>
+              <a routerLink="/bilerak" class="btn btn-sm btn-outline-primary">
+                {{ 'DASHBOARD.VIEW_ALL' | translate }}
+              </a>
+            </div>
+            <div class="card-body">
+              <!-- Kargatzean -->
+              @if (isLoading) {
+                <app-loading-spinner [size]="2"></app-loading-spinner>
+              }
+
+              <!-- Bilerik ez -->
+              @if (!isLoading && upcomingBilerak.length === 0) {
+                <div class="text-center text-muted py-4">
+                  <i class="bi bi-calendar-x display-4"></i>
+                  <p class="mt-2">{{ 'DASHBOARD.NO_MEETINGS' | translate }}</p>
+                </div>
+              }
+
+              <!-- Bilera zerrenda -->
+              @if (!isLoading && upcomingBilerak.length > 0) {
+                <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                    <thead>
+                      <tr>
+                        <th>{{ 'BILERA.NAME' | translate }}</th>
+                        <th>{{ 'BILERA.DATE' | translate }}</th>
+                        <th>{{ 'BILERA.TIME' | translate }}</th>
+                        <th>{{ 'BILERA.LOCATION' | translate }}</th>
+                        <th>{{ 'BILERA.STATUS' | translate }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (bilera of upcomingBilerak; track bilera.id) {
+                        <tr>
+                          <td>
+                            <strong>{{ bilera.titulua }}</strong>
+                            <small class="d-block text-muted">{{ bilera.azalpena }}</small>
+                          </td>
+                          <td>{{ bilera.data | date:'dd/MM/yyyy' }}</td>
+                          <td>{{ bilera.hasieraOrdua || '--:--' }}</td>
+                          <td>{{ getIkastetxeaIzena(bilera.ikastetxeId) }}</td>
+                          <td>
+                            <span class="badge" [ngClass]="getStatusBadgeClass(bilera.egoera)">
+                              {{ 'BILERA.STATUS_' + bilera.egoera.toUpperCase() | translate }}
+                            </span>
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Erabiltzaile informazioa -->
+        <div class="col-12 col-lg-4">
+          <div class="card mt-4">
+            <div class="card-header">
+              <h5 class="mb-0">
+                <i class="bi bi-info-circle me-2"></i>
+                {{ 'DASHBOARD.MY_INFO' | translate }}
+              </h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-unstyled mb-0">
+                <li class="mb-2">
+                  <strong>{{ 'USER.NAME' | translate }}:</strong>
+                  {{ currentUser?.izena }} {{ currentUser?.abizena }}
+                </li>
+                <li class="mb-2">
+                  <strong>{{ 'USER.EMAIL' | translate }}:</strong>
+                  {{ currentUser?.email }}
+                </li>
+                <li>
+                  <strong>{{ 'USER.ROLE' | translate }}:</strong>
+                  <span class="badge ms-1" [ngClass]="getRoleBadgeClass()">
+                    {{ 'ROLES.' + (currentUser?.rola || 'UNKNOWN') | uppercase | translate }}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

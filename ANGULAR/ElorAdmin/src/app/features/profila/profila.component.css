@@ -1,0 +1,32 @@
+.avatar-perfil {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--color-primario);
+      box-shadow: var(--sombra-media);
+      display: block;
+      margin: 0 auto;
+    }
+
+.card {
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  font-size: 1.1rem;
+  padding: 1.5rem;
+}
+
+.form-section {
+  margin-bottom: 2rem;
+}
+
+.form-section-titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--color-secundario);
+}

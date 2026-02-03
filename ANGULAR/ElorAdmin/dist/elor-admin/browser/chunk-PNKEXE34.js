@@ -1,0 +1,1 @@
+var t={production:!1,apiUrl:"http://localhost:3000/api",mapboxToken:"pk.YOUR_MAPBOX_TOKEN_HERE",openDataUrl:"https://opendata.euskadi.eus/contenidos/ds_centros_702/centros_702/opendata",defaultCenter:{lat:43.263,lng:-2.935},sessionTimeout:60};export{t as a};

@@ -1,0 +1,137 @@
+<div class="ikasle-detail-page fade-in">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/ikasleak">{{ 'IKASLEAK.TITLE' | translate }}</a>
+      </li>
+      @if (ikasle) {
+        <li class="breadcrumb-item active">
+          {{ ikasle.izena }} {{ ikasle.abizena }}
+        </li>
+      }
+    </ol>
+  </nav>
+
+  <!-- Kargatzean -->
+  @if (isLoading) {
+    <app-loading-spinner></app-loading-spinner>
+  }
+
+  <!-- Edukia -->
+  @if (!isLoading && ikasle) {
+    <div class="row g-4">
+      <!-- Informazio pertsonala -->
+      <div class="col-12 col-lg-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <img
+              [src]="getUserAvatar()"
+              [alt]="ikasle.izena"
+              class="ikasle-avatar-lg mb-3">
+            <h4>{{ ikasle.izena }} {{ ikasle.abizena }}</h4>
+            <span class="badge bg-info mb-3">{{ 'ROLES.IKASLE' | translate }}</span>
+
+            <ul class="list-unstyled text-start mt-4">
+              <li class="mb-2">
+                <i class="bi bi-envelope me-2 text-primary"></i>
+                {{ ikasle.email }}
+              </li>
+              @if (ikasle.telefonoa1) {
+                <li class="mb-2">
+                  <i class="bi bi-telephone me-2 text-primary"></i>
+                  {{ ikasle.telefonoa1 }}
+                </li>
+              }
+              @if (ikasle.zikloa) {
+                <li class="mb-2">
+                  <i class="bi bi-book me-2 text-primary"></i>
+                  {{ ikasle.zikloa }}
+                </li>
+              }
+              @if (ikasle.taldea) {
+                <li class="mb-2">
+                  <i class="bi bi-people me-2 text-primary"></i>
+                  {{ ikasle.taldea }}
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bilerak -->
+        <div class="card mt-4">
+          <div class="card-header">
+            <h5 class="mb-0">
+              <i class="bi bi-calendar-event me-2"></i>
+              {{ 'IKASLE.BILERAK' | translate }}
+            </h5>
+          </div>
+          <div class="card-body">
+            @if (bilerak.length === 0) {
+              <p class="text-muted text-center">
+                {{ 'IKASLE.NO_MEETINGS' | translate }}
+              </p>
+            }
+            @if (bilerak.length > 0) {
+              <ul class="list-group list-group-flush">
+                @for (bilera of bilerak; track bilera.id) {
+                  <li class="list-group-item px-0">
+                    <strong>{{ bilera.titulua }}</strong>
+                    <small class="d-block text-muted">
+                      {{ bilera.data | date:'dd/MM/yyyy' }}
+                    </small>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Ordutegia -->
+      <div class="col-12 col-lg-8">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">
+              <i class="bi bi-clock me-2"></i>
+              {{ 'ORDUTEGIA.TITLE' | translate }}
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered ordutegia-table">
+                <thead class="table-info">
+                  <tr>
+                    <th></th>
+                    <th class="text-center">{{ 'ORDUTEGIA.MONDAY' | translate }}</th>
+                    <th class="text-center">{{ 'ORDUTEGIA.TUESDAY' | translate }}</th>
+                    <th class="text-center">{{ 'ORDUTEGIA.WEDNESDAY' | translate }}</th>
+                    <th class="text-center">{{ 'ORDUTEGIA.THURSDAY' | translate }}</th>
+                    <th class="text-center">{{ 'ORDUTEGIA.FRIDAY' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (ordua of [1, 2, 3, 4, 5, 6]; track ordua) {
+                    <tr>
+                      <th class="text-center">{{ ordua }}. {{ 'SCHEDULE.HOUR' | translate }}</th>
+                      @for (eguna of egunak; track eguna) {
+                        <td class="text-center">
+                          @if (getOrdutegiaCell(eguna, ordua); as cell) {
+                            <span class="ordutegia-cell">
+                              {{ cell }}
+                            </span>
+                          }
+                        </td>
+                      }
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

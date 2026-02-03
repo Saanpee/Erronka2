@@ -1,0 +1,25 @@
+.contenedor-aplicacion {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .contenido-principal {
+      flex: 1;
+      margin-left: 250px;
+      padding: 0;
+      transition: margin-left var(--velocidad-normal);
+
+      &.barra-contraida {
+        margin-left: 70px;
+      }
+    }
+
+    .envoltura-contenido {
+      padding: 1.5rem;
+    }
+
+    @media (max-width: 992px) {
+      .contenido-principal {
+        margin-left: 0;
+      }
+    }

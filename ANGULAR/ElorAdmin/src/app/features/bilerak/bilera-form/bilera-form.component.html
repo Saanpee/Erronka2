@@ -1,0 +1,182 @@
+<div class="bilera-form-page fade-in">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/bilerak">{{ 'BILERAK.TITLE' | translate }}</a>
+          </li>
+          <li class="breadcrumb-item active">
+            {{ isViewMode ? ('BILERAK.VIEW' | translate) : (isEditMode ? ('BILERAK.EDIT' | translate) : ('BILERAK.NEW' | translate)) }}
+          </li>
+        </ol>
+      </nav>
+
+      <h1 class="mb-4">
+        {{ isViewMode ? ('BILERAK.VIEW_TITLE' | translate) : (isEditMode ? ('BILERAK.EDIT_TITLE' | translate) : ('BILERAK.NEW_TITLE' | translate)) }}
+      </h1>
+
+      <!-- Kargatzean -->
+      @if (isLoading) {
+        <app-loading-spinner></app-loading-spinner>
+      }
+
+      <!-- Formularioa -->
+      @if (!isLoading) {
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="bileraForm" (ngSubmit)="onSubmit()">
+              <div class="row g-3">
+                <!-- Izena -->
+                <div class="col-12">
+                  <label for="izena" class="form-label">
+                    {{ 'BILERA.NAME' | translate }} *
+                  </label>
+                  <input
+                    type="text"
+                    id="izena"
+                    class="form-control"
+                    formControlName="izena"
+                    [class.is-invalid]="isFieldInvalid('izena')">
+                  <div class="invalid-feedback">
+                    {{ 'ERRORS.REQUIRED' | translate }}
+                  </div>
+                </div>
+
+                <!-- Deskribapena -->
+                <div class="col-12">
+                  <label for="deskribapena" class="form-label">
+                    {{ 'BILERA.DESCRIPTION' | translate }} 
+                  </label>
+                  <textarea
+                    id="deskribapena"
+                    class="form-control"
+                    formControlName="deskribapena"
+                    rows="3"
+                    [class.is-invalid]="isFieldInvalid('deskribapena')"></textarea>
+                  <div class="invalid-feedback">
+                    {{ 'ERRORS.REQUIRED' | translate }}
+                  </div>
+                </div>
+
+                <!-- Data eta Hasiera Ordua -->
+                <div class="col-12 col-md-6">
+                  <label for="data" class="form-label">
+                    {{ 'BILERA.DATE' | translate }} *
+                  </label>
+                  <input
+                    type="date"
+                    id="data"
+                    class="form-control"
+                    formControlName="data"
+                    [class.is-invalid]="isFieldInvalid('data')">
+                  <div class="invalid-feedback">
+                    {{ 'ERRORS.REQUIRED' | translate }}
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="hasieraOrdua" class="form-label">
+                    {{ 'BILERA.START_TIME' | translate }} *
+                  </label>
+                  <input
+                    type="time"
+                    id="hasieraOrdua"
+                    class="form-control"
+                    formControlName="hasieraOrdua"
+                    [class.is-invalid]="isFieldInvalid('hasieraOrdua')">
+                  <div class="invalid-feedback">
+                    {{ 'ERRORS.REQUIRED' | translate }}
+                  </div>
+                </div>
+
+                <!-- Ikastetxea -->
+                <div class="col-12 col-md-6">
+                  <label for="ikastetxeaId" class="form-label">
+                    {{ 'BILERA.SCHOOL' | translate }} *
+                  </label>
+                  <select
+                    id="ikastetxeaId"
+                    class="form-select"
+                    formControlName="ikastetxeaId"
+                    [class.is-invalid]="isFieldInvalid('ikastetxeaId')">
+                    <option [ngValue]="null">{{ 'COMMON.SELECT' | translate }}</option>
+                    @for (ikastetxea of ikastetxeak; track ikastetxea.id) {
+                      <option [ngValue]="ikastetxea.id">
+                        {{ ikastetxea.izena }}
+                      </option>
+                    }
+                  </select>
+                  <div class="invalid-feedback">
+                    {{ 'ERRORS.REQUIRED' | translate }}
+                  </div>
+                </div>
+
+                <!-- Aula -->
+                <div class="col-12 col-md-6">
+                  <label for="aula" class="form-label">
+                    {{ 'BILERA.CLASSROOM' | translate }} *
+                  </label>
+                  <input
+                    type="text"
+                    id="aula"
+                    class="form-control"
+                    formControlName="aula"
+                    placeholder="Ej: A101, B205..."
+                    [class.is-invalid]="isFieldInvalid('aula')">
+                  <div class="invalid-feedback">
+                    {{ 'ERRORS.REQUIRED' | translate }}
+                  </div>
+                </div>
+
+                <!-- Egoera (editatzean bakarrik) -->
+                @if (isEditMode) {
+                  <div class="col-12 col-md-6">
+                    <label for="egoera" class="form-label">
+                      {{ 'BILERA.STATUS' | translate }}
+                    </label>
+                    <select
+                      id="egoera"
+                      class="form-select"
+                      formControlName="egoera">
+                      <option value="pendiente">{{ 'BILERA.STATUS_PROGRAMATUA' | translate }}</option>
+                      <option value="completada">{{ 'BILERA.STATUS_BURUTUA' | translate }}</option>
+                      <option value="cancelada">{{ 'BILERA.STATUS_BERTAN_BEHERA' | translate }}</option>
+                    </select>
+                  </div>
+                }
+
+                <!-- Oharrak -->
+                @if (!isViewMode) {
+                  <div class="col-12">
+                    <label for="oharrak" class="form-label">
+                      {{ 'BILERA.NOTES' | translate }}
+                    </label>
+                    <textarea
+                      id="oharrak"
+                      class="form-control"
+                      formControlName="oharrak"
+                      rows="2"></textarea>
+                  </div>
+                }
+              </div>
+
+              <!-- Botoiak -->
+              <div class="d-flex justify-content-end gap-2 mt-4">
+                <a routerLink="/bilerak" class="btn btn-secondary">
+                  {{ isViewMode ? ('COMMON.BACK' | translate) : ('COMMON.CANCEL' | translate) }}
+                </a>
+                
+                @if (!isViewMode) {
+                  <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+                    @if (isSaving) {
+                      <span class="spinner-border spinner-border-sm me-2"></span>
+                    }
+                    {{ isSaving ? ('COMMON.SAVING' | translate) : ('COMMON.SAVE' | translate) }}
+                  </button>
+                }
+              </div>
+            </form>
+          </div>
+        </div>
+      }
+    </div>

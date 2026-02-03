@@ -1,0 +1,8 @@
+<div class="contenedor-carga" [class.pantalla-completa]="fullscreen">
+  <div class="spinner-border text-primary" role="status" [style.width.rem]="size" [style.height.rem]="size">
+    <span class="visually-hidden">Kargatzen...</span>
+  </div>
+  @if (message) {
+    <p class="texto-carga mt-3">{{ message }}</p>
+  }
+</div>

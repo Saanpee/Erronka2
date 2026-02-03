@@ -1,0 +1,138 @@
+.dashboard-card {
+      border-radius: 1rem;
+      padding: 1.5rem;
+      color: white;
+      overflow: hidden;
+
+      &.card-ikasleak {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      &.card-irakasleak {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      }
+
+      &.card-bilerak {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+
+      &.card-admin {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+
+      .card-icon {
+        font-size: 3rem;
+        opacity: 0.3;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+      }
+
+      .card-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .card-label {
+        font-size: 0.875rem;
+        opacity: 0.9;
+        margin-top: 0.25rem;
+      }
+    }
+
+    .dashboard-header {
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--color-oscuro);
+    }
+
+    .dashboard-header p {
+      font-size: 1rem;
+      color: var(--color-gris);
+    }
+
+    /* Tarjetas de estadísticas */
+    .tarjeta-estadistica {
+      border-radius: 15px;
+      padding: 1.8rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--velocidad-normal);
+      cursor: pointer;
+    }
+
+    .tarjeta-estadistica:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .tarjeta-estudiantes {
+      background: linear-gradient(135deg, #0077b6 0%, #005a8c 100%);
+    }
+
+    .tarjeta-profesores {
+      background: linear-gradient(135deg, #00a9e0 0%, #0089b8 100%);
+    }
+
+    .tarjeta-reuniones {
+      background: linear-gradient(135deg, #0088d0 0%, #006ba8 100%);
+    }
+
+    .tarjeta-admin {
+      background: linear-gradient(135deg, #004e89 0%, #003d6b 100%);
+    }
+
+    .icono-tarjeta {
+      font-size: 3.5rem;
+      opacity: 0.15;
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+
+    .numero-tarjeta {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .etiqueta-tarjeta {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      font-weight: 600;
+    }
+
+    /* Tabla de reuniones */
+    .tabla-bilerak {
+      margin-top: 1rem;
+    }
+
+    .tabla-bilerak thead {
+      background: linear-gradient(135deg, var(--color-primario), var(--color-primario-claro));
+    }
+
+    .tabla-bilerak th {
+      color: white;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      padding: 1.25rem;
+    }
+
+    .tabla-bilerak tbody tr:hover {
+      background-color: rgba(0, 119, 182, 0.05);
+    }
+
+    .tabla-bilerak a:focus,
+    .tabla-bilerak button:focus {
+      outline: none;
+      box-shadow: none;
+    }

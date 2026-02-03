@@ -1,0 +1,150 @@
+<div class="bilerak-page fade-in">
+      <!-- Goiburua -->
+      <div class="page-header d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h1>{{ 'BILERAK.TITLE' | translate }}</h1>
+          <p class="text-muted mb-0">{{ 'BILERAK.SUBTITLE' | translate }}</p>
+        </div>
+        @if (canCreateBilera()) {
+          <a routerLink="/bilerak/berria" class="btn btn-primary">
+            <i class="bi bi-calendar-plus me-2"></i>
+            {{ 'BILERAK.ADD_NEW' | translate }}
+          </a>
+        }
+      </div>
+
+      <!-- Filtroak -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row g-3">
+            <!-- Mota (DTITUC) -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label class="form-label">{{ 'BILERA.TYPE' | translate }}</label>
+              <select
+                class="form-select"
+                [(ngModel)]="filters.mota"
+                (ngModelChange)="onFilterChange()">
+                <option [value]="undefined">{{ 'BILERA.TYPE_GUZTIAK' | translate }}</option>
+                <option value="hezkuntza_saila">{{ 'BILERA.TYPE_HEZKUNTZA' | translate }}</option>
+                <option value="pribatua">{{ 'BILERA.TYPE_PRIBATUA' | translate }}</option>
+                <option value="beste_publiko">{{ 'BILERA.TYPE_BESTE' | translate }}</option>
+              </select>
+            </div>
+
+            <!-- Lurraldea (DTERRER) -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label class="form-label">{{ 'BILERA.TERRITORY' | translate }}</label>
+              <select
+                class="form-select"
+                [(ngModel)]="selectedLurraldea"
+                (ngModelChange)="onLurraldeaChange()">
+                <option value="">{{ 'COMMON.ALL' | translate }}</option>
+                <option value="araba">Araba</option>
+                <option value="bizkaia">Bizkaia</option>
+                <option value="gipuzkoa">Gipuzkoa</option>
+              </select>
+            </div>
+
+            <!-- Udalerria (DMUNIC) -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label class="form-label">{{ 'BILERA.MUNICIPALITY' | translate }}</label>
+              <select
+                class="form-select"
+                [(ngModel)]="selectedUdalerria"
+                (ngModelChange)="onUdalerriChange()">
+                <option value="">{{ 'COMMON.ALL' | translate }}</option>
+                @for (udalerria of udalerriak; track udalerria) {
+                  <option [value]="udalerria">
+                    {{ udalerria }}
+                  </option>
+                }
+              </select>
+            </div>
+
+            <!-- Ikastetxea -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label class="form-label">{{ 'BILERA.SCHOOL' | translate }}</label>
+              <select
+                class="form-select"
+                [(ngModel)]="filters.ikastetxeaId"
+                (ngModelChange)="onFilterChange()">
+                <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
+                @for (ikastetxea of filteredIkastetxeak; track ikastetxea.id) {
+                  <option [ngValue]="ikastetxea.id">
+                    {{ ikastetxea.izena }}
+                  </option>
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kargatzean -->
+      @if (isLoading) {
+        <app-loading-spinner></app-loading-spinner>
+      }
+
+      <!-- Bilera zerrenda -->
+      @if (!isLoading) {
+        <div class="row g-4">
+          
+          <!-- Bilera card -->
+          @for (bilera of filteredBilerak; track bilera.id) {
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card h-100 shadow-sm hover-card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="card-title mb-0">{{ bilera.titulua }}</h5>
+                    <span class="badge" [ngClass]="{
+                      'bg-success': bilera.egoera === 'burututa',
+                      'bg-warning': bilera.egoera === 'planifikatuta',
+                      'bg-danger': bilera.egoera === 'bertan_behera'
+                    }">
+                      {{ bilera.egoera }}
+                    </span>
+                  </div>
+                  
+                  <p class="card-text text-muted small">{{ bilera.azalpena }}</p>
+                  
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="bi bi-calendar3 me-2"></i>
+                    <span>{{ bilera.data | date:'dd/MM/yyyy' }}</span>
+                  </div>
+                  
+                  @if (bilera.hasieraOrdua) {
+                    <div class="d-flex align-items-center mb-2">
+                      <i class="bi bi-clock me-2"></i>
+                      <span>{{ bilera.hasieraOrdua }}</span>
+                    </div>
+                  }
+                  
+                  <div class="d-flex justify-content-end mt-3">
+                    <button class="btn btn-sm btn-outline-primary me-2" 
+                            [routerLink]="['/bilerak/ikusi', bilera.id]">
+                      <i class="bi bi-eye"></i> {{ 'COMMON.VIEW' | translate }}
+                    </button>
+                    @if (authService.isAdmin()) {
+                      <button class="btn btn-sm btn-outline-danger" 
+                              (click)="confirmDelete(bilera)">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- Ez dago bilerarik -->
+          @if (filteredBilerak.length === 0) {
+            <div class="col-12">
+              <div class="text-center text-muted py-5">
+                <i class="bi bi-calendar-x display-1"></i>
+                <p class="mt-3">{{ 'BILERAK.NO_MEETINGS' | translate }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>

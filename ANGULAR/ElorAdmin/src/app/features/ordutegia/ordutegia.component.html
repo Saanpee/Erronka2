@@ -1,0 +1,80 @@
+<div class="ordutegia-page fade-in">
+      <div class="page-header mb-4">
+        <h1>{{ 'ORDUTEGIA.TITLE' | translate }}</h1>
+        <p class="text-muted mb-0">{{ 'ORDUTEGIA.SUBTITLE' | translate }}</p>
+      </div>
+
+      <!-- Kargatzean -->
+      @if (isLoading) {
+        <app-loading-spinner></app-loading-spinner>
+      }
+
+      <!-- Ordutegia taula -->
+      @if (!isLoading) {
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered ordutegia-table">
+                <thead>
+                  <tr class="table-primary">
+                    <th class="text-center" style="width: 100px;">{{ 'ORDUTEGIA.HOUR' | translate }}</th>
+                    <th class="text-center">{{ 'ORDUTEGIA.MONDAY' | translate }}</th>
+                    <th class="text-center">{{ 'ORDUTEGIA.TUESDAY' | translate }}</th>
+                    <th class="text-center">{{ 'ORDUTEGIA.WEDNESDAY' | translate }}</th>
+                    <th class="text-center">{{ 'ORDUTEGIA.THURSDAY' | translate }}</th>
+                    <th class="text-center">{{ 'ORDUTEGIA.FRIDAY' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (ordua of orduak; track ordua.ordua) {
+                    <tr>
+                      <th class="text-center align-middle">
+                        {{ ordua.ordua }}. ordua
+                        <small class="d-block text-muted">{{ ordua.hasiera }} - {{ ordua.amaiera }}</small>
+                      </th>
+                      @for (eguna of egunak; track eguna) {
+                        <td class="text-center align-middle"
+                            [class.has-class]="getOrdutegiaCell(eguna, ordua.ordua)">
+                          @if (getOrdutegiaCell(eguna, ordua.ordua); as cell) {
+                            <div class="ordutegia-cell">
+                              <strong>{{ cell.ikasgaia }}</strong>
+                              @if (cell.gela) {
+                                <small class="d-block text-muted">{{ cell.gela }}</small>
+                              }
+                              @if (cell.irakaslea) {
+                                <small class="d-block text-muted">{{ cell.irakaslea }}</small>
+                              }
+                            </div>
+                          }
+                        </td>
+                      }
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legenda -->
+        <div class="card mt-4">
+          <div class="card-body">
+            <h6>{{ 'ORDUTEGIA.LEGEND' | translate }}</h6>
+            <div class="d-flex flex-wrap gap-3">
+              <div class="legend-item">
+                <span class="legend-color bg-primary"></span>
+                {{ 'ORDUTEGIA.REGULAR_CLASS' | translate }}
+              </div>
+              <div class="legend-item">
+                <span class="legend-color bg-success"></span>
+                {{ 'ORDUTEGIA.TUTORING' | translate }}
+              </div>
+              <div class="legend-item">
+                <span class="legend-color bg-warning"></span>
+                {{ 'ORDUTEGIA.GUARD' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>

@@ -1,0 +1,27 @@
+<!-- Erabiltzailea autentikatuta badago, layout osoa erakutsi -->
+@if (authService.isLoggedIn()) {
+  <div class="contenedor-aplicacion">
+    <!-- Sidebar - Alboko menua -->
+    <app-sidebar
+      [isCollapsed]="sidebarCollapsed"
+      (toggleSidebar)="toggleSidebar()">
+    </app-sidebar>
+
+    <!-- Eduki nagusia -->
+    <main class="contenido-principal" [class.barra-contraida]="sidebarCollapsed">
+      <!-- Goiko nabigazio barra -->
+      <app-navbar
+        (toggleSidebarEvent)="toggleSidebar()"
+        (logoutEvent)="logout()">
+      </app-navbar>
+
+      <!-- Router outlet - Orrialdeen edukia -->
+      <div class="envoltura-contenido">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+} @else {
+  <!-- Login pantaila (erabiltzailea autentikatu gabe badago) -->
+  <router-outlet></router-outlet>
+}

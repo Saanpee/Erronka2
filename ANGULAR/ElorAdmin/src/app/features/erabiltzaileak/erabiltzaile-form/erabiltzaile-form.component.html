@@ -1,0 +1,198 @@
+<div class="erabiltzaile-form-page fade-in">
+      <!-- Goiburua -->
+      <div class="page-header mb-4">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a routerLink="/erabiltzaileak">{{ 'ERABILTZAILEAK.TITLE' | translate }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+              {{ isEditMode ? ('ERABILTZAILEAK.EDIT' | translate) : ('ERABILTZAILEAK.NEW' | translate) }}
+            </li>
+          </ol>
+        </nav>
+        <h1>
+          {{ isEditMode ? ('ERABILTZAILEAK.EDIT_TITLE' | translate) : ('ERABILTZAILEAK.NEW_TITLE' | translate) }}
+        </h1>
+      </div>
+
+      <!-- Kargatzean -->
+      @if (isLoading) {
+        <app-loading-spinner message="Kargatzen..."></app-loading-spinner>
+      }
+
+      <!-- Formularioa -->
+      @if (!isLoading) {
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+              <div class="row g-3">
+                <!-- Izena -->
+                <div class="col-12 col-md-6">
+                  <label for="izena" class="form-label">
+                    {{ 'USER.FIRST_NAME' | translate }} *
+                  </label>
+                  <input
+                    type="text"
+                    id="izena"
+                    class="form-control"
+                    formControlName="izena"
+                    [class.is-invalid]="isFieldInvalid('izena')">
+                  @if (isFieldInvalid('izena')) {
+                    <div class="invalid-feedback">
+                      {{ 'ERRORS.REQUIRED' | translate }}
+                    </div>
+                  }
+                </div>
+
+                <!-- Abizena -->
+                <div class="col-12 col-md-6">
+                  <label for="abizena" class="form-label">
+                    {{ 'USER.LAST_NAME' | translate }} *
+                  </label>
+                  <input
+                    type="text"
+                    id="abizena"
+                    class="form-control"
+                    formControlName="abizena"
+                    [class.is-invalid]="isFieldInvalid('abizena')">
+                  @if (isFieldInvalid('abizena')) {
+                    <div class="invalid-feedback">
+                      {{ 'ERRORS.REQUIRED' | translate }}
+                    </div>
+                  }
+                </div>
+
+                <!-- Email -->
+                <div class="col-12 col-md-6">
+                  <label for="email" class="form-label">
+                    {{ 'USER.EMAIL' | translate }} *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    formControlName="email"
+                    [class.is-invalid]="isFieldInvalid('email')">
+                  @if (isFieldInvalid('email')) {
+                    <div class="invalid-feedback">
+                      {{ 'ERRORS.INVALID_EMAIL' | translate }}
+                    </div>
+                  }
+                </div>
+
+                <!-- Rola -->
+                <div class="col-12 col-md-6">
+                  <label for="rola" class="form-label">
+                    {{ 'USER.ROLE' | translate }} *
+                  </label>
+                  <select
+                    id="rola"
+                    class="form-select"
+                    formControlName="rola"
+                    [class.is-invalid]="isFieldInvalid('rola')">
+                    <option value="">{{ 'COMMON.SELECT' | translate }}</option>
+                    @if (authService.isGod()) {
+                      <option value="admin">{{ 'ROLES.ADMIN' | translate }}</option>
+                    }
+                    <option value="teacher">{{ 'ROLES.IRAKASLE' | translate }}</option>
+                    <option value="student">{{ 'ROLES.IKASLE' | translate }}</option>
+                  </select>
+                  @if (isFieldInvalid('rola')) {
+                    <div class="invalid-feedback">
+                      {{ 'ERRORS.REQUIRED' | translate }}
+                    </div>
+                  }
+                </div>
+
+                <!-- Pasahitza (soilik sortzean edo aldatu nahi bada) -->
+                <div class="col-12 col-md-6">
+                  <label for="pasahitza" class="form-label">
+                    {{ 'USER.PASSWORD' | translate }} {{ isEditMode ? '' : '*' }}
+                  </label>
+                  <div class="input-group">
+                    <input
+                      [type]="showPassword ? 'text' : 'password'"
+                      id="pasahitza"
+                      class="form-control"
+                      formControlName="pasahitza"
+                      [class.is-invalid]="isFieldInvalid('pasahitza')">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      (click)="togglePassword()">
+                      <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                    </button>
+                  </div>
+                  @if (isFieldInvalid('pasahitza')) {
+                    <div class="invalid-feedback d-block">
+                      {{ 'ERRORS.MIN_LENGTH' | translate : { min: 4 } }}
+                    </div>
+                  }
+                </div>
+
+                <!-- Telefonoa -->
+                <div class="col-12 col-md-6">
+                  <label for="telefonoa" class="form-label">
+                    {{ 'USER.PHONE' | translate }}
+                  </label>
+                  <input
+                    type="tel"
+                    id="telefonoa"
+                    class="form-control"
+                    formControlName="telefonoa">
+                </div>
+
+                <!-- Helbidea -->
+                <div class="col-12">
+                  <label for="helbidea" class="form-label">
+                    {{ 'USER.ADDRESS' | translate }}
+                  </label>
+                  <textarea
+                    id="helbidea"
+                    class="form-control"
+                    formControlName="helbidea"
+                    rows="2"></textarea>
+                </div>
+
+                <!-- Aktibo (editatzean bakarrik) -->
+                @if (isEditMode) {
+                  <div class="col-12">
+                    <div class="form-check form-switch">
+                      <input
+                        type="checkbox"
+                        id="aktibo"
+                        class="form-check-input"
+                        formControlName="aktibo">
+                      <label for="aktibo" class="form-check-label">
+                        {{ 'USER.ACTIVE' | translate }}
+                      </label>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <!-- Botoiak -->
+              <div class="mt-4">
+                <div class="d-flex justify-content-end gap-2">
+                  <a routerLink="/erabiltzaileak" class="btn btn-secondary">
+                    {{ 'COMMON.CANCEL' | translate }}
+                  </a>
+                  @if (canEdit) {
+                    <button 
+                      type="submit" 
+                      class="btn btn-primary" 
+                      [disabled]="isSaving">
+                      @if (isSaving) {
+                        <span class="spinner-border spinner-border-sm me-2"></span>
+                      }
+                      {{ isSaving ? ('COMMON.SAVING' | translate) : ('COMMON.SAVE' | translate) }}
+                    </button>
+                  }
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      }
+    </div>

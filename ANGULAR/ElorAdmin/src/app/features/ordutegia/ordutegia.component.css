@@ -1,0 +1,27 @@
+.ordutegia-table {
+      th, td {
+        vertical-align: middle;
+        min-width: 120px;
+      }
+
+      td.has-class {
+        background-color: #e3f2fd;
+      }
+    }
+
+    .ordutegia-cell {
+      padding: 0.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .legend-color {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+    }
