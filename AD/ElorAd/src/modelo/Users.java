@@ -1,0 +1,228 @@
+package modelo;
+
+import java.security.Timestamp;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+public class Users implements java.io.Serializable {
+	 private static final long serialVersionUID = 1L;
+		private Integer id;
+		private Tipos tipos;
+		  
+		private String email;
+		 
+		private String username;
+		
+		private String password;
+		private String nombre;
+		private String apellidos;
+		private String dni;
+		private String direccion;
+		private String telefono1;
+		private String telefono2;
+		private String argazkiaUrl;
+		private Date createdAt;
+		private Date updatedAt;
+		private Set matriculacioneses = new HashSet(0);
+		private Set reunionesesForAlumnoId = new HashSet(0);
+		private Set horarioses = new HashSet(0);
+		private Set reunionesesForProfesorId = new HashSet(0);
+
+		public Users() {
+		}
+
+		public Users(Tipos tipos, String email, String username, String password) {
+			this.tipos = tipos;
+			this.email = email;
+			this.username = username;
+			this.password = password;
+		}
+
+		public Users(Tipos tipos, String email, String username, String password, String nombre, String apellidos,
+				String dni, String direccion, String telefono1, String telefono2, String argazkiaUrl, Date createdAt,
+				Date updatedAt, Set matriculacioneses, Set reunionesesForAlumnoId, Set horarioses,
+				Set reunionesesForProfesorId) {
+			this.tipos = tipos;
+			this.email = email;
+			this.username = username;
+			this.password = password;
+			this.nombre = nombre;
+			this.apellidos = apellidos;
+			this.dni = dni;
+			this.direccion = direccion;
+			this.telefono1 = telefono1;
+			this.telefono2 = telefono2;
+			this.argazkiaUrl = argazkiaUrl;
+			this.createdAt = createdAt;
+			this.updatedAt = updatedAt;
+			this.matriculacioneses = matriculacioneses;
+			this.reunionesesForAlumnoId = reunionesesForAlumnoId;
+			this.horarioses = horarioses;
+			this.reunionesesForProfesorId = reunionesesForProfesorId;
+		}
+		
+		public TiposEnum getTipoEnum() {
+		    if (this.tipos == null || this.tipos.getId() == null) {
+		        return null;
+		    }
+		    return TiposEnum.fromId(this.tipos.getId());
+		}
+
+		public Integer getId() {
+			return this.id;
+		}
+
+		public void setId(Integer id) {
+			this.id = id;
+		}
+
+		public Tipos getTipos() {
+			return this.tipos;
+		}
+
+		public void setTipos(Tipos tipos) {
+			this.tipos = tipos;
+		}
+
+		public String getEmail() {
+			return this.email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public String getUsername() {
+			return this.username;
+		}
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+
+		public String getPassword() {
+			return this.password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public String getNombre() {
+			return this.nombre;
+		}
+
+		public void setNombre(String nombre) {
+			this.nombre = nombre;
+		}
+
+		public String getApellidos() {
+			return this.apellidos;
+		}
+
+		public void setApellidos(String apellidos) {
+			this.apellidos = apellidos;
+		}
+
+		public String getDni() {
+			return this.dni;
+		}
+
+		public void setDni(String dni) {
+			this.dni = dni;
+		}
+
+		public String getDireccion() {
+			return this.direccion;
+		}
+
+		public void setDireccion(String direccion) {
+			this.direccion = direccion;
+		}
+
+		public String getTelefono1() {
+			return this.telefono1;
+		}
+
+		public void setTelefono1(String telefono1) {
+			this.telefono1 = telefono1;
+		}
+
+		public String getTelefono2() {
+			return this.telefono2;
+		}
+
+		public void setTelefono2(String telefono2) {
+			this.telefono2 = telefono2;
+		}
+
+		public String getArgazkiaUrl() {
+			return this.argazkiaUrl;
+		}
+
+		public void setArgazkiaUrl(String argazkiaUrl) {
+			this.argazkiaUrl = argazkiaUrl;
+		}
+
+		public Date getCreatedAt() {
+			return this.createdAt;
+		}
+
+		public void setCreatedAt(Date createdAt) {
+			this.createdAt = createdAt;
+		}
+
+		public Date getUpdatedAt() {
+			return this.updatedAt;
+		}
+
+		public void setUpdatedAt(Date updatedAt) {
+			this.updatedAt = updatedAt;
+		}
+
+		public Set getMatriculacioneses() {
+			return this.matriculacioneses;
+		}
+
+		public void setMatriculacioneses(Set matriculacioneses) {
+			this.matriculacioneses = matriculacioneses;
+		}
+
+		public Set getReunionesesForAlumnoId() {
+			return this.reunionesesForAlumnoId;
+		}
+
+		public void setReunionesesForAlumnoId(Set reunionesesForAlumnoId) {
+			this.reunionesesForAlumnoId = reunionesesForAlumnoId;
+		}
+
+		public Set getHorarioses() {
+			return this.horarioses;
+		}
+
+		public void setHorarioses(Set horarioses) {
+			this.horarioses = horarioses;
+		}
+
+		public Set getReunionesesForProfesorId() {
+			return this.reunionesesForProfesorId;
+		}
+
+		public void setReunionesesForProfesorId(Set reunionesesForProfesorId) {
+			this.reunionesesForProfesorId = reunionesesForProfesorId;
+		}
+
+		@Override
+		public String toString() {
+			return "Users [id=" + id + ", tipos=" + tipos + ", email=" + email + ", username=" + username
+					+ ", password=" + password + ", nombre=" + nombre + ", apellidos=" + apellidos + ", dni=" + dni
+					+ ", direccion=" + direccion + ", telefono1=" + telefono1 + ", telefono2=" + telefono2
+					+ ", argazkiaUrl=" + argazkiaUrl + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+					+ ", matriculacioneses=" + matriculacioneses + ", reunionesesForAlumnoId=" + reunionesesForAlumnoId
+					+ ", horarioses=" + horarioses + ", reunionesesForProfesorId=" + reunionesesForProfesorId + "]";
+		}
+
+	}
+
+ 

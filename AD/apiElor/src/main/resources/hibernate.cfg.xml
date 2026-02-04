@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="elorBase">
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/elorbase</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        
+        <mapping resource="modelo/Ciclos.hbm.xml"></mapping>
+        <mapping resource="modelo/Horarios.hbm.xml"></mapping>
+        <mapping resource="modelo/Matriculaciones.hbm.xml"></mapping>
+        <mapping resource="modelo/Modulos.hbm.xml"></mapping>
+        <mapping resource="modelo/Reuniones.hbm.xml"></mapping>
+        <mapping resource="modelo/Tipos.hbm.xml"></mapping>
+        <mapping resource="modelo/Users.hbm.xml"></mapping>
+     
+       
+        
+    </session-factory>
+</hibernate-configuration>
