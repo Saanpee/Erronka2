@@ -119,8 +119,8 @@ export class DashboardComponent implements OnInit {
   }
 
   navigateToUsers(tipo_id: number): void {
-    this.router.navigate(['/users'], { queryParams: { tipo: tipo_id } });
-  }
+  this.router.navigate(['/erabiltzaileak'], { queryParams: { tipo: tipo_id } });
+}
 
   navigateToBilerak(): void {
     this.router.navigate(['/bilerak']);

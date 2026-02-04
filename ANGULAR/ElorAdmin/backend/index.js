@@ -26,11 +26,11 @@ app.use(bodyParser.json());
 
 // conexion mysql
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "eduelorrieta",
-  port: 3307
+  host: "10.5.104.144",
+  user: "adminAngular",
+  password: "12345",
+  database: "elorbase",
+  port: 3306
 });
 
 // manejar errores
