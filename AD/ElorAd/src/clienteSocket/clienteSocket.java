@@ -29,8 +29,7 @@ public class clienteSocket {
     private Gson gson;
 
     /**
-     * CONSTRUCTOR: Abre la conexión y configura los flujos.
-     * He añadido un Timeout de 5 segundos para evitar el "atascazo" inicial.
+     * Abre la conexión y configura los flujos.
      */
     public clienteSocket() {
         try {
