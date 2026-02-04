@@ -1,8 +1,4 @@
-/**
- * Services Index - ElorAdmin
- * Zerbitzu guztiak esportatzeko fitxategia
- */
-
+// Zerbitzuak esportatzeko fitxategia
 export * from './auth.service';
 export * from './user.service';
 export * from './bilera.service';

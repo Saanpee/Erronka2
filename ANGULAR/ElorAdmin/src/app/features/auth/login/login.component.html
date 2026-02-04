@@ -9,16 +9,20 @@
         <h2 class="login-title">{{ 'LOGIN.TITLE' | translate }}</h2>
 
         <!-- Errore mezua -->
-        <div class="alert alert-danger" *ngIf="errorMessage">
-          <i class="bi bi-exclamation-triangle me-2"></i>
-          {{ errorMessage }}
-        </div>
+        @if (errorMessage) {
+          <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            {{ errorMessage }}
+          </div>
+        }
 
         <!-- Sesioa iraungi bada -->
-        <div class="alert alert-warning" *ngIf="sessionExpired">
-          <i class="bi bi-clock me-2"></i>
-          {{ 'LOGIN.SESSION_EXPIRED' | translate }}
-        </div>
+        @if (sessionExpired) {
+          <div class="alert alert-warning">
+            <i class="bi bi-clock me-2"></i>
+            {{ 'LOGIN.SESSION_EXPIRED' | translate }}
+          </div>
+        }
 
         <!-- Login formularioa -->
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -39,9 +43,11 @@
                 [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
                 [class.is-invalid]="isFieldInvalid('email')">
             </div>
-            <div class="invalid-feedback d-block" *ngIf="isFieldInvalid('email')">
-              {{ 'LOGIN.EMAIL_REQUIRED' | translate }}
-            </div>
+            @if (isFieldInvalid('email')) {
+              <div class="invalid-feedback d-block">
+                {{ 'LOGIN.EMAIL_REQUIRED' | translate }}
+              </div>
+            }
           </div>
 
           <!-- Pasahitza eremua -->
@@ -67,9 +73,11 @@
                 <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
               </button>
             </div>
-            <div class="invalid-feedback d-block" *ngIf="isFieldInvalid('pasahitza')">
-              {{ 'LOGIN.PASSWORD_REQUIRED' | translate }}
-            </div>
+            @if (isFieldInvalid('pasahitza')) {
+              <div class="invalid-feedback d-block">
+                {{ 'LOGIN.PASSWORD_REQUIRED' | translate }}
+              </div>
+            }
           </div>
 
           <!-- Submit botoia -->
@@ -77,7 +85,9 @@
             type="submit"
             class="btn btn-primary w-100 btn-lg"
             [disabled]="isLoading">
-            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+            @if (isLoading) {
+              <span class="spinner-border spinner-border-sm me-2"></span>
+            }
             {{ isLoading ? ('LOGIN.LOADING' | translate) : ('LOGIN.SUBMIT' | translate) }}
           </button>
         </form>

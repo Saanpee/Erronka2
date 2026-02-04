@@ -126,9 +126,7 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/bilerak']);
   }
 
-  /**
-   * Erabiltzaile rolaren badge klasea
-   */
+  // Erabiltzaile rolaren badge klasea
   getRoleBadgeClass(): string {
     switch (this.currentUser?.rola) {
       case UserRole.GOD: return 'bg-danger';

@@ -1,8 +1,3 @@
-/**
- * Irakasle Xehetasuna Component - ElorAdmin
- * Irakasle baten xehetasuna eta ordutegia
- */
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -46,9 +41,7 @@ export class IrakasleXehetasunaComponent implements OnInit {
     }
   }
 
-  /**
-   * Irakaslea kargatu
-   */
+  // Irakaslea kargatu
   private loadIrakasle(id: number): void {
     this.isLoading = true;
 
@@ -63,9 +56,7 @@ export class IrakasleXehetasunaComponent implements OnInit {
     });
   }
 
-  /**
-   * Ordutegia kargatu
-   */
+  // Ordutegia kargatu
   private loadOrdutegia(userId: number): void {
     this.userService.getOrdutegiaByUserId(userId).subscribe({
       next: (ordutegia) => {
@@ -78,17 +69,13 @@ export class IrakasleXehetasunaComponent implements OnInit {
     });
   }
 
-  /**
-   * Ordutegiaren gelaxka lortu
-   */
+  // Ordutegiaren gelaxka lortu
   getOrdutegiaCell(eguna: string, ordua: number): string | null {
     const item = this.ordutegia.find(o => o.eguna === eguna && o.ordua === ordua);
     return item ? item.ikasgaia : null;
   }
 
-  /**
-   * Avatarra lortu
-   */
+  // Argazkia lortu
   getUserAvatar(): string {
     if (this.irakasle?.argazkia_url) {
       return `public/images/${this.irakasle.argazkia_url}`;

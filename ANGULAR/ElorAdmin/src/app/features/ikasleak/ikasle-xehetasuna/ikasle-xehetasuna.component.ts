@@ -1,8 +1,3 @@
-/**
- * Ikasle Xehetasuna Component - ElorAdmin
- * Ikasle baten xehetasuna, ordutegia eta bilerak
- */
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -52,9 +47,7 @@ export class IkasleXehetasunaComponent implements OnInit {
     }
   }
 
-  /**
-   * Ikaslea kargatu
-   */
+  // Ikaslea kargatu
   private loadIkasle(id: number): void {
     this.isLoading = true;
 
@@ -70,9 +63,7 @@ export class IkasleXehetasunaComponent implements OnInit {
     });
   }
 
-  /**
-   * Ordutegia kargatu
-   */
+  // Ordutegia kargatu
   private loadOrdutegia(userId: number): void {
     this.userService.getOrdutegiaByUserId(userId).subscribe({
       next: (ordutegia) => {
@@ -85,9 +76,7 @@ export class IkasleXehetasunaComponent implements OnInit {
     });
   }
 
-  /**
-   * Bilerak kargatu
-   */
+  // Bilerak kargatu
   private loadBilerak(): void {
     this.bileraService.getUpcoming(3).subscribe({
       next: (bilerak) => {
@@ -96,17 +85,13 @@ export class IkasleXehetasunaComponent implements OnInit {
     });
   }
 
-  /**
-   * Ordutegiaren gelaxka lortu
-   */
+  // Ordutegiaren gelaxka lortu
   getOrdutegiaCell(eguna: string, ordua: number): string | null {
     const item = this.ordutegia.find(o => o.eguna === eguna && o.ordua === ordua);
     return item ? item.ikasgaia : null;
   }
 
-  /**
-   * Avatarra lortu
-   */
+  // Argazkia lortu
   getUserAvatar(): string {
     if (this.ikasle?.argazkia_url) {
       return `public/images/${this.ikasle.argazkia_url}`;

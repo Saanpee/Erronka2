@@ -1,9 +1,3 @@
-/**
- * Erabiltzaile Zerrenda Component - ElorAdmin
- * Administratzaileen zerrenda
- * CRUD eragiketak kudeatzeko
- */
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
@@ -53,9 +47,7 @@ export class ErabiltzaileZerrendaComponent implements OnInit {
     });
   }
 
-  /**
-   * Erabiltzaileak kargatu
-   */
+  // Erabiltzaileak kargatu
   private loadUsers(): void {
     this.isLoading = true;
     this.userService.getAll().subscribe({
@@ -77,16 +69,12 @@ export class ErabiltzaileZerrendaComponent implements OnInit {
     });
   }
 
-  /**
-   * Bilaketa egitean
-   */
+  // Bilaketa egitean
   onSearch(): void {
     this.filterUsers();
   }
 
-  /**
-   * Filtroa aldatzean
-   */
+  // Filtroa aldatzean
   onFilterChange(): void {
     this.filterUsers();
   }
@@ -112,9 +100,7 @@ export class ErabiltzaileZerrendaComponent implements OnInit {
     this.filteredUsers = filtered;
   }
 
-  /**
-   * Erabiltzailearen avatarra lortu
-   */
+  // Erabiltzailearen argazkia lortu
   getUserAvatar(user: User): string {
     if (user.argazkia_url) {
       return `public/images/${user.argazkia_url}`;
@@ -122,9 +108,7 @@ export class ErabiltzaileZerrendaComponent implements OnInit {
     return 'public/images/avatarLehenetsia.jpg';
   }
 
-  /**
-   * Rol badge klasea
-   */
+  // Rol badge klasea
   getRoleBadgeClass(role: UserRole): string {
     switch (role) {
       case UserRole.GOD: return 'bg-danger';
@@ -135,9 +119,7 @@ export class ErabiltzaileZerrendaComponent implements OnInit {
     }
   }
 
-  /**
-   * Ezabatzeko berrespena eskatu
-   */
+  // Ezabatzeko berrespena eskatu
   confirmDelete(user: User): void {
     this.userToDelete = user;
     // Bootstrap modal-a ireki (JavaScript bidez)
@@ -182,9 +164,7 @@ export class ErabiltzaileZerrendaComponent implements OnInit {
     return false;
   }
 
-  /**
-   * Verificar si puede ver los datos del usuario
-   */
+  // Verificar si puede ver usuario
   canView(user: User): boolean {
     // God y Admin pueden ver todos
     if (this.authService.isGod() || this.authService.isAdmin()) {
@@ -210,9 +190,7 @@ export class ErabiltzaileZerrendaComponent implements OnInit {
     return [];
   }
 
-  /**
-   * Erabiltzailea ezabatu
-   */
+  // Erabiltzailea ezabatu
   deleteUser(): void {
     if (!this.userToDelete) return;
 

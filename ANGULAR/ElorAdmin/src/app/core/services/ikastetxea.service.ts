@@ -57,7 +57,7 @@ export class IkastetxeaService {
         return [];
       }
 
-      // ✅ Filtrar solo centros que tengan CCEN (ID válido)
+      // Filtrar centros que tengan CCEN 
       const centrosConId = data.CENTROS.filter((centro: any) => centro.CCEN);
 
       return centrosConId.map((centro: any) => {
@@ -88,7 +88,7 @@ export class IkastetxeaService {
     return this.getAll().pipe(
       map(ikastetxeak => {
         const found = ikastetxeak.find(i => i.id === id);
-        console.log('✅ Ikastetxea encontrado:', found);
+        console.log('Ikastetxea encontrado:', found);
         return found;
       })
     );

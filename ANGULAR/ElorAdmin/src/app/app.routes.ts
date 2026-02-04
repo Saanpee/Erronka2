@@ -1,16 +1,10 @@
-/**
- * App Routes - ElorAdmin
- * Aplikazioaren bide guztiak definitzen ditu
- * AuthGuard-ekin babestutako bideak
- */
-
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 import { UserRole } from './core/models/user.model';
 
 export const routes: Routes = [
-  // Login orria - Sarbide publikoa
+  // Login orria publikoa
   {
     path: 'login',
     loadComponent: () => import('./features/auth/login/login.component')
@@ -18,7 +12,7 @@ export const routes: Routes = [
     title: 'Saioa Hasi - ElorAdmin'
   },
 
-  // Dashboard - Babestuta (autentikatutako erabiltzaileak)
+  // Dashboard babestuta 
   {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard.component')
@@ -27,7 +21,7 @@ export const routes: Routes = [
     title: 'Hasiera - ElorAdmin'
   },
 
-  // Erabiltzaileak kudeatu - Administratzaileak eta Irakasleak
+  // Erabiltzaileak kudeatu administratzaileak eta irakasleak soilik
   {
     path: 'erabiltzaileak',
     canActivate: [authGuard, roleGuard],
@@ -58,7 +52,7 @@ export const routes: Routes = [
     ]
   },
 
-  // Bilerak (Reuniones)
+  // Bilerak
   {
     path: 'bilerak',
     canActivate: [authGuard],
@@ -83,6 +77,8 @@ export const routes: Routes = [
           .then(m => m.BileraFormComponent),
         title: 'Bilera Ikusi - ElorAdmin'
       },
+
+      // Bilera editatu irakaslea soilik
       {
         path: 'editatu/:id',
         loadComponent: () => import('./features/bilerak/bilera-form/bilera-form.component')
@@ -94,7 +90,7 @@ export const routes: Routes = [
     ]
   },
 
-  // Ikastetxeak - Mapa eta zerrenda
+  // Ikastetxeak mapa eta zerrenda
   {
     path: 'ikastetxeak',
     canActivate: [authGuard],
@@ -103,7 +99,7 @@ export const routes: Routes = [
     title: 'Ikastetxeak - ElorAdmin'
   },
 
-  // Nire profila
+  // Profila
   {
     path: 'profila',
     canActivate: [authGuard],
@@ -112,7 +108,7 @@ export const routes: Routes = [
     title: 'Nire Profila - ElorAdmin'
   },
 
-  // Nire ordutegia (Irakasle eta ikasleentzat)
+  // Ordutegia irakasle eta ikasleentzat soilik
   {
     path: 'ordutegia',
     canActivate: [authGuard],
@@ -121,14 +117,14 @@ export const routes: Routes = [
     title: 'Ordutegia - ElorAdmin'
   },
 
-  // Bide lehenetsia - Dashboard-era birbideratu
+  // Bide lehenetsia dashboard-era birbideratu
   {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full'
   },
 
-  // 404 - Ez aurkitua
+  // 404 ez aurkitua
   {
     path: '**',
     loadComponent: () => import('./shared/components/not-found/not-found.component')

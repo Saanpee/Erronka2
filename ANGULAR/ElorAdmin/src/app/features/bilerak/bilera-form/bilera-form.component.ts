@@ -48,9 +48,7 @@ export class BileraFormComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  /**
-   * Formularioa hasieratu
-   */
+  // Formulario hasieratu
   private initForm(): void {
     this.bileraForm = this.fb.group({
       izena: ['', [Validators.required]],
@@ -103,18 +101,14 @@ export class BileraFormComponent implements OnInit {
     this.canCreateBilera = true;
   }
 
-  /**
-   * Ikastetxeak kargatu
-   */
+  // Ikastetxeak kargatu
   private loadIkastetxeak(): void {
     this.ikastetxeaService.getAll().subscribe(ikastetxeak => {
       this.ikastetxeak = ikastetxeak;
     });
   }
 
-  /**
-   *  Cargar ikastetxeak Y bilera simultáneamente
-   */
+  // Ikastetxeak eta bilera kargatu 
   private loadDataForEdit(): void {
     if (!this.bileraId) return;
 
@@ -193,17 +187,13 @@ export class BileraFormComponent implements OnInit {
     }
   }
 
-  /**
-   * Eremu bat baliogabea den konprobatu
-   */
+  // Eremu balidoa den egiaztatu
   isFieldInvalid(fieldName: string): boolean {
     const field = this.bileraForm.get(fieldName);
     return field ? field.invalid && (field.dirty || field.touched) : false;
   }
 
-  /**
-   * Formularioa bidali
-   */
+  // Formularioa bidali
   onSubmit(): void {
     if (this.bileraForm.invalid) {
       console.log('Formulario inválido');

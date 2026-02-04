@@ -49,24 +49,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  /**
-   * Eremu bat baliogabea den konprobatu
-   */
+  // Eremu baten balidazio egoera egiaztatu
   isFieldInvalid(fieldName: string): boolean {
     const field = this.loginForm.get(fieldName);
     return field ? field.invalid && (field.dirty || field.touched) : false;
   }
 
-  /**
-   * Pasahitza erakutsi/ezkutatu
-   */
+  // Pasahitza erakutsi edo ezkutatu
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
-  /**
-   * Formularioa bidali
-   */
+  // Formularioa bidali
   onSubmit(): void {
     // Formularioa baliogabea bada, markatu eremuak
     if (this.loginForm.invalid) {
@@ -88,7 +82,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate([returnUrl]);
       },
       error: (error) => {
-        console.error('❌ Error en login:', error);
+        console.error('Error en login:', error);
         this.isLoading = false;
         this.errorMessage = error.message || 'Errorea saioa hastean';
       }

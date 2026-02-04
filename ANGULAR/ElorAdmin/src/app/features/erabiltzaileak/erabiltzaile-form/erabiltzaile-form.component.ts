@@ -1,8 +1,3 @@
-/**
- * Erabiltzaile Form Component - ElorAdmin
- * Erabiltzailea sortu/editatzeko formularioa
- */
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
@@ -34,9 +29,7 @@ export class ErabiltzaileFormComponent implements OnInit {
   userId: number | null = null;
   currentEditingUser: User | null = null;
 
-  /**
-   * Verificar si el usuario puede editar (solo GOD y ADMIN)
-   */
+  // Erabiltzaile editatu dezakeen ala ez
   get canEdit(): boolean {
     const currentUser = this.authService.getCurrentUser();
     
@@ -63,9 +56,7 @@ export class ErabiltzaileFormComponent implements OnInit {
     return false;
   }
 
-  /**
-   * Verificar si es modo solo lectura (profesores)
-   */
+  // Erabiltzaileak irakurtzeko soilik ala ez
   get isReadOnly(): boolean {
     return this.authService.isProfesor();
   }
@@ -90,9 +81,7 @@ export class ErabiltzaileFormComponent implements OnInit {
     }
   }
 
-  /**
-   * Formularioa hasieratu
-   */
+  // Formularioa hasieratu
   private initForm(): void {
     this.userForm = this.fb.group({
       izena: ['', [Validators.required, Validators.minLength(2)]],
@@ -106,9 +95,7 @@ export class ErabiltzaileFormComponent implements OnInit {
     });
   }
 
-  /**
-   * Erabiltzailea kargatu (editatzeko)
-   */
+  // Erabiltzailea kargatu 
   private loadUser(): void {
     if (!this.userId) return;
 
@@ -142,24 +129,18 @@ export class ErabiltzaileFormComponent implements OnInit {
     });
   }
 
-  /**
-   * Eremu bat baliogabea den konprobatu
-   */
+  // Eremu bat baliozkoa den ala ez
   isFieldInvalid(fieldName: string): boolean {
     const field = this.userForm.get(fieldName);
     return field ? field.invalid && (field.dirty || field.touched) : false;
   }
 
-  /**
-   * Pasahitza erakutsi/ezkutatu
-   */
+  // Pasahitza erakutsi edo ezkutatu
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
-  /**
-   * Formularioa bidali
-   */
+  // Formularioa bidali
   onSubmit(): void {
     if (this.userForm.invalid) {
       Object.keys(this.userForm.controls).forEach(key => {

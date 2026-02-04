@@ -1,9 +1,3 @@
-/**
- * App Component - ElorAdmin
- * Aplikazioaren osagai nagusia
- * Sidebar, navbar eta router-outlet dauzka
- */
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
@@ -27,8 +21,6 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
   styleUrls: ['./app.css']
 })
 export class AppComponent implements OnInit {
-  // Sidebar tolestuta dagoen ala ez
-  sidebarCollapsed = false;
 
   constructor(
     public authService: AuthService,
@@ -51,16 +43,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  /**
-   * Sidebar-a tolestu/zabaldu
-   */
-  toggleSidebar(): void {
-    this.sidebarCollapsed = !this.sidebarCollapsed;
-  }
-
-  /**
-   * Saioa itxi eta login-era birbideratu
-   */
+  // Saioa itxi
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);

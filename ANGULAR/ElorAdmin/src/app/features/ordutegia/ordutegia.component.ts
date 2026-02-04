@@ -1,9 +1,3 @@
-/**
- * Ordutegia Component - ElorAdmin
- * Erabiltzailearen ordutegia erakusten du
- * Irakasle eta ikasleentzat
- */
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,6 +15,7 @@ import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner
   styleUrls: ['./ordutegia.component.css']
 })
 export class OrdutegiaComponent implements OnInit {
+
   // Ordutegia
   ordutegia: OrdutegiaItem[] = [];
 
@@ -51,9 +46,8 @@ export class OrdutegiaComponent implements OnInit {
     this.loadOrdutegia();
   }
 
-  /**
-   * Ordutegia kargatu
-   */
+  // Ordutegia kargatu
+
   private loadOrdutegia(): void {
     const user = this.authService.getCurrentUser();
     if (!user) return;
@@ -70,9 +64,8 @@ export class OrdutegiaComponent implements OnInit {
     });
   }
 
-  /**
-   * Ordutegiaren gelaxka lortu
-   */
+  // Ordutegiaren gelaxka lortu
+
   getOrdutegiaCell(eguna: string, ordua: number): OrdutegiaItem | null {
     return this.ordutegia.find(o => o.eguna === eguna && o.ordua === ordua) || null;
   }

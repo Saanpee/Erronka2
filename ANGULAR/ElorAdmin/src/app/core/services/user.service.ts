@@ -1,8 +1,3 @@
-/**
- * User Service - ElorAdmin
- * Erabiltzaileen CRUD zerbitzua
- */
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -102,13 +97,13 @@ export class UserService {
       .pipe(
         map(response => {
           if (!response.success || !response.data) {
-            console.error('⚠️ Respuesta sin datos:', response);
+            console.error('Respuesta sin datos:', response);
             return [];
           }
           return response.data.map(u => this.mapDbUserToUser(u) as Irakasle);
         }),
         catchError(error => {
-          console.error('❌ Error en getIrakasleak:', error);
+          console.error('Error en getIrakasleak:', error);
           return throwError(() => error);
         })
       );

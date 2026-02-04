@@ -1,8 +1,3 @@
-/**
- * Not Found Component - ElorAdmin
- * 404 errorea - Orrialdea ez da aurkitu
- */
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';

@@ -1,9 +1,3 @@
-/**
- * Bilera Zerrenda Component - ElorAdmin
- * Bileren zerrenda filtroekin
- * DTITUC, DTERRER eta DMUNIC filtroak
- */
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -56,9 +50,7 @@ export class BileraZerrendaComponent implements OnInit {
     this.loadData();
   }
 
-  /**
-   * Datuak kargatu
-   */
+  // Datuak kargatu
   private loadData(): void {
     this.isLoading = true;
 
@@ -86,9 +78,7 @@ export class BileraZerrendaComponent implements OnInit {
     return currentUser?.rola === UserRole.IRAKASLE;
   }
 
-  /**
-   * Lurraldea aldatzean
-   */
+  // Lurraldea aldatzean
   onLurraldeaChange(): void {
     this.selectedUdalerria = '';
 
@@ -111,9 +101,7 @@ export class BileraZerrendaComponent implements OnInit {
     this.onFilterChange();
   }
 
-  /**
-   * Udalerria aldatzean
-   */
+  // Udalerria aldatzean
   onUdalerriChange(): void {
     if (this.selectedUdalerria) {
       this.filteredIkastetxeak = this.ikastetxeak.filter(
@@ -131,9 +119,7 @@ export class BileraZerrendaComponent implements OnInit {
     this.onFilterChange();
   }
 
-  /**
-   * Filtroak aplikatu
-   */
+  // Filtroak aldatu 
   onFilterChange(): void {
     this.filteredBilerak = this.bilerak.filter(bilera => {
       // Ikastetxea filtro
@@ -154,21 +140,7 @@ export class BileraZerrendaComponent implements OnInit {
     });
   }
 
-  /**
-   * Mota badge klasea
-   */
-  getMotaBadgeClass(mota: BileraMota): string {
-    switch (mota) {
-      case 'hezkuntza_saila': return 'bg-primary';
-      case 'pribatua': return 'bg-warning text-dark';
-      case 'beste_publiko': return 'bg-info';
-      default: return 'bg-secondary';
-    }
-  }
-
-  /**
-   * Egoera badge klasea
-   */
+  // Egoera badge klasea
   getStatusBadgeClass(status: string): string {
     switch (status) {
       case 'planifikatuta': return 'bg-success';
@@ -178,9 +150,7 @@ export class BileraZerrendaComponent implements OnInit {
     }
   }
 
-  /**
-   * Ezabatzeko berrespena
-   */
+  // Ezabatu bilera konfirmatu
   confirmDelete(bilera: Bilera): void {
     if (confirm('Ziur zaude bilera hau ezabatu nahi duzula?')) {
       this.bileraService.delete(bilera.id).subscribe(() => {

@@ -1,9 +1,3 @@
-/**
- * Ikastetxe Zerrenda Component - ElorAdmin
- * Ikastetxeen zerrenda eta mapa (Mapbox)
- * Filtroak: mota, lurraldea, udalerria
- */
-
 import { Component, OnInit, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -60,9 +54,7 @@ export class IkastetxeZerrendaComponent implements OnInit, AfterViewInit, OnDest
     }
   }
 
-  /**
-   * Mapa hasieratu
-   */
+  // Mapa hasieratu
   private initMap(): void {
     // Mapa sortu con token en opciones
     this.map = new mapboxgl.Map({
@@ -105,9 +97,7 @@ export class IkastetxeZerrendaComponent implements OnInit, AfterViewInit, OnDest
     });
   }
 
-  /**
-   * Ikastetxeak kargatu
-   */
+  // Ikastetxeak kargatu
   private loadIkastetxeak(): void {
     this.isLoading = true;
     this.ikastetxeaService.getAll().subscribe({
@@ -123,9 +113,7 @@ export class IkastetxeZerrendaComponent implements OnInit, AfterViewInit, OnDest
     });
   }
 
-  /**
-   * Lurraldea aldatzean
-   */
+  // Lurraldea aldatu
   onLurraldeaChange(): void {
     this.filters.udalerria = '';
 
@@ -140,9 +128,7 @@ export class IkastetxeZerrendaComponent implements OnInit, AfterViewInit, OnDest
     this.onFilterChange();
   }
 
-  /**
-   * Filtroak aldatzean
-   */
+  // Filtroak aldatu
   onFilterChange(): void {
     this.ikastetxeaService.getFiltered(this.filters).subscribe(ikastetxeak => {
       this.filteredIkastetxeak = ikastetxeak;
@@ -150,9 +136,7 @@ export class IkastetxeZerrendaComponent implements OnInit, AfterViewInit, OnDest
     });
   }
 
-  /**
-   * Mapako markatzaileak eguneratu
-   */
+  // Mapa markatzaileak eguneratu
   private updateMapMarkers(): void {
     if (!this.map) return;
 
@@ -185,9 +169,7 @@ export class IkastetxeZerrendaComponent implements OnInit, AfterViewInit, OnDest
     });
   }
 
-  /**
-   * Ikastetxea hautatzean
-   */
+  // Ikastetxea hautatu
   onSelectIkastetxea(ikastetxea: Ikastetxea): void {
     this.selectedIkastetxea = ikastetxea;
 
@@ -205,9 +187,7 @@ export class IkastetxeZerrendaComponent implements OnInit, AfterViewInit, OnDest
     marker?.togglePopup();
   }
 
-  /**
-   * Markatzaile kolorea motaren arabera
-   */
+  // Markatzaile kolorea
   private getMarkerColor(mota: IkastetxeMota): string {
     switch (mota) {
       case 'hezkuntza_saila': return '#0077b6';
@@ -217,9 +197,7 @@ export class IkastetxeZerrendaComponent implements OnInit, AfterViewInit, OnDest
     }
   }
 
-  /**
-   * Mota badge klasea
-   */
+  // Mota badge klasea
   getMotaBadgeClass(mota: IkastetxeMota): string {
     switch (mota) {
       case 'hezkuntza_saila': return 'bg-primary';

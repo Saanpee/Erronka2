@@ -1,8 +1,3 @@
-/**
- * Profila Component - ElorAdmin
- * Erabiltzailearen profila ikusi eta aldatu
- */
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -40,9 +35,7 @@ export class ProfilaComponent implements OnInit {
     this.initForm();
   }
 
-  /**
-   * Formularioa hasieratu
-   */
+  // Formularioa hasieratu
   private initForm(): void {
     this.profileForm = this.fb.group({
       izena: [this.currentUser?.izena || '', Validators.required],
@@ -55,9 +48,7 @@ export class ProfilaComponent implements OnInit {
     });
   }
 
-  /**
-   * Erabiltzailearen avatarra
-   */
+  // Erabiltzailearen avatarra
   get userAvatar(): string {
     if (this.currentUser?.argazkia_url) {
       return `public/images/${this.currentUser.argazkia_url}`;
@@ -65,9 +56,8 @@ export class ProfilaComponent implements OnInit {
     return 'public/images/avatarLehenetsia.jpg';
   }
 
-  /**
-   * Rol badge klasea
-   */
+  // Rol badge klasea
+
   getRoleBadgeClass(): string {
     switch (this.currentUser?.rola) {
       case UserRole.GOD: return 'bg-danger';
@@ -78,24 +68,18 @@ export class ProfilaComponent implements OnInit {
     }
   }
 
-  /**
-   * Eremu bat baliogabea den konprobatu
-   */
+  // Eremu bat baliogabea den konprobatu
   isFieldInvalid(fieldName: string): boolean {
     const field = this.profileForm.get(fieldName);
     return field ? field.invalid && (field.dirty || field.touched) : false;
   }
 
-  /**
-   * Formularioa berrezarri
-   */
+  // Formularioa berrezarri
   resetForm(): void {
     this.initForm();
   }
 
-  /**
-   * Fitxategia aukeratutakoan
-   */
+  // Fitxategia aukeratutakoan
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -120,9 +104,7 @@ export class ProfilaComponent implements OnInit {
     }
   }
 
-  /**
-   * Formularioa bidali
-   */
+  // Formularioa bidali
   onSubmit(): void {
     if (this.profileForm.invalid) {
       return;

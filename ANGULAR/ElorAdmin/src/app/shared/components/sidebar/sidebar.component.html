@@ -6,26 +6,28 @@
           alt="Elorrieta-Erreka Mari"
           class="logo-imagen"
           [class.contraido]="isCollapsed">
-        <span class="titulo-aplicacion" *ngIf="!isCollapsed">ElorAdmin</span>
+        <span class="titulo-aplicacion">ElorAdmin</span>
       </div>
 
       <!-- Menú de navegación -->
       <nav class="menu-navegacion">
         <ul class="nav flex-column">
           <!-- Menu elementuak -->
-          <li class="nav-item" *ngFor="let item of visibleMenuItems">
-            <a
-              class="enlace-menu"
-              [routerLink]="item.route"
-              routerLinkActive="activo"
-              [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
-              [title]="item.label | translate">
-              <i class="bi" [ngClass]="item.icon"></i>
-              <span class="texto-menu" *ngIf="!isCollapsed">
-                {{ item.label | translate }}
-              </span>
-            </a>
-          </li>
+          @for (item of visibleMenuItems; track item.route) {
+            <li class="nav-item">
+              <a
+                class="enlace-menu"
+                [routerLink]="item.route"
+                routerLinkActive="activo"
+                [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+                [title]="item.label | translate">
+                <i class="bi" [ngClass]="item.icon"></i>
+                <span class="texto-menu">
+                  {{ item.label | translate }}
+                </span>
+              </a>
+            </li>
+          }
         </ul>
       </nav>
     </aside>

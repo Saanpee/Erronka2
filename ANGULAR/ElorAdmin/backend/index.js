@@ -26,11 +26,11 @@ app.use(bodyParser.json());
 
 // conexion mysql
 const connection = mysql.createConnection({
-  host: "10.5.104.138",
-  user: "adminAngular",
-  password: "12345",
-  database: "elorbase",
-  port: 3306
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "eduelorrieta",
+  port: 3307
 });
 
 // manejar errores
@@ -637,4 +637,10 @@ app._router.stack.forEach(function(r){
   if (r.route && r.route.path){
     console.log('Ruta registrada:', r.route.path);
   }
+});
+
+// Iniciar el servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
