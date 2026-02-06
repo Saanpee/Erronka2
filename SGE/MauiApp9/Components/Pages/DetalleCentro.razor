@@ -1,0 +1,165 @@
+﻿@page "/detalle/{Id:int}"
+@using MauiApp9.Models
+@using MauiApp9.Services
+@using System.Net.Http.Json
+@using System.Globalization
+@using System.Text.Json.Serialization
+@inject CentroService CentroService
+@inject NavigationManager NavManager
+@inject IJSRuntime JSRuntime
+@inject HttpClient Http
+
+<div class="container py-5">
+    <div class="mb-5 d-flex align-items-center justify-content-between">
+        <button class="btn btn-white shadow-sm rounded-pill px-4" @onclick="Volver">
+            <i class="bi bi-chevron-left me-1"></i> Bueltatu
+        </button>
+        <div class="text-end">
+            <h1 class="h2 fw-bold m-0">@centro?.Nombre</h1>
+            <span class="text-muted">@centro?.Municipio (@centro?.Territorio)</span>
+        </div>
+    </div>
+
+    @if (centro != null)
+    {
+            <div class="row g-5"> <div class="col-lg-5 detalle-col-flex">
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="card p-3 border-0 shadow-sm">
+                                <div class="d-flex align-items-center">
+                                    <div class="icon-circle bg-primary-subtle text-primary me-3 mb-0">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                    </div>
+                                    <div>
+                                        <div class="label-cap">Direzioa</div>
+                                        <div class="fw-bold">@centro.Direccion</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="card p-3 h-100 border-0 shadow-sm">
+                                <div class="label-cap mb-2">Telefonoa</div>
+                                <a href="tel:@centro.Telefono" class="text-decoration-none fw-bold text-dark">
+                                    <i class="bi bi-telephone-fill text-success me-2"></i>@centro.Telefono
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="card p-3 h-100 border-0 shadow-sm">
+                                <div class="label-cap mb-2">Email</div>
+                                <div class="fw-bold small text-truncate-custom" title="@centro.Email">
+                                    <i class="bi bi-envelope-at-fill text-danger me-2"></i>@centro.Email
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="weather-card-container">
+                        <div class="card overflow-hidden border-0 shadow-lg">
+                            <div class="weather-header">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="label-cap text-white-50 mb-1">Ahora</div>
+                                        <div class="temp-display">@weatherData?.Current?.Temperature°</div>
+                                    </div>
+                                    <i class="bi bi-sun-fill text-warning" style="font-size: 3.5rem;"></i>
+                                </div>
+                                <div class="mt-3 d-flex gap-3">
+                                    <span class="badge bg-white bg-opacity-25 rounded-pill px-3">
+                                        <i class="bi bi-wind me-1"></i> @weatherData?.Current?.WindSpeed km/h
+                                    </span>
+                                @if (airQualityData?.Current != null)
+                                {
+                                            <span class="badge bg-white bg-opacity-25 rounded-pill px-3">
+                                                Aire: @GetInfoCalidadAire(airQualityData.Current.EuropeanAqi).Texto
+                                            </span>
+                                }
+                                </div>
+                            </div>
+                            <div class="prevision-grid">
+                            @if (weatherData?.Daily?.Time != null)
+                            {
+                                @for (int i = 1; i <= 3; i++)
+                                {
+                                                <div class="prevision-card shadow-sm">
+                                                    <div class="label-cap mb-1">@DateTime.Parse(weatherData.Daily.Time[i]).ToString("ddd")</div>
+                                                    <div class="fw-bold text-danger">@weatherData.Daily.MaxTemp[i]°</div>
+                                                    <div class="text-primary small opacity-50">@weatherData.Daily.MinTemp[i]°</div>
+                                                </div>
+                                }
+                            }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="card border-0 shadow-sm overflow-hidden h-100" style="min-height: 600px;">
+                        <div id="map" style="height: 100%; width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+    }
+</div>
+
+@code {
+
+    [Parameter] 
+    
+    public int Id { get; set; }
+
+    private Centro centro;
+    private WeatherResponse weatherData;
+    private AirQualityResponse airQualityData;
+    private bool mapaInicializado = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        mapaInicializado = false;
+        await CentroService.InicializarAsync();
+        centro = CentroService.ObtenerPorId(Id);
+        if (centro != null)
+        {
+            string lat = centro.Latitud.ToString(CultureInfo.InvariantCulture);
+            string lon = centro.Longitud.ToString(CultureInfo.InvariantCulture);
+            try
+            {
+                var taskT = Http.GetFromJsonAsync<WeatherResponse>($"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto");
+                var taskA = Http.GetFromJsonAsync<AirQualityResponse>($"https://air-quality-api.open-meteo.com/v1/air-quality?latitude={lat}&longitude={lon}&current=european_aqi");
+                await Task.WhenAll(taskT, taskA);
+                weatherData = taskT.Result; airQualityData = taskA.Result;
+            }
+            catch { }
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (centro != null && !mapaInicializado)
+        {
+            try
+            {
+                await JSRuntime.InvokeVoidAsync("dibujarMapa", centro.Latitud, centro.Longitud, centro.Nombre);
+                mapaInicializado = true;
+            }
+            catch { }
+        }
+    }
+
+    private void Volver() => NavManager.NavigateTo("/buscador");
+
+    private (string Color, string Texto) GetInfoCalidadAire(int? aqi)
+    {
+        if (!aqi.HasValue) return ("secondary", "N/A");
+        if (aqi < 20) return ("success", "Oso ona");
+        if (aqi < 40) return ("info", "Ona");
+        return ("warning", "Txarto");
+    }
+
+    public class AirQualityResponse { [JsonPropertyName("current")] public CurrentAirQuality Current { get; set; } }
+    public class CurrentAirQuality { [JsonPropertyName("european_aqi")] public int? EuropeanAqi { get; set; } }
+}

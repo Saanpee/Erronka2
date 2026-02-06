@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>ElorMAUI</title>
+    <base href="/" />
+
+    <link rel="stylesheet" href="css/app.css" />
+
+    <link rel="stylesheet" href="MauiApp9.styles.css" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+
+<body>
+    <div id="app">Cargando...</div>
+
+    <script src="_framework/blazor.webview.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        window.dibujarMapa = (lat, lon, titulo) => {
+            if (window.mapaActual) { window.mapaActual.remove(); }
+            const mapDiv = document.getElementById('map');
+            if (mapDiv) {
+                mapDiv.style.height = "500px"; 
+                mapDiv.style.width = "100%";
+                mapDiv.style.marginTop = "20px";
+            }
+            window.mapaActual = L.map('map').setView([lat, lon], 15);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(window.mapaActual);
+            L.marker([lat, lon]).addTo(window.mapaActual).bindPopup(titulo).openPopup();
+        }
+    </script>
+</body>
+</html>
